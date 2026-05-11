@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chetana Shiksha Niketan – Student Registration</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root {
+    --white: #ffffff;
+    --blue-50: #eff8ff;
+    --blue-100: #dbeffe;
+    --blue-200: #b9e0fd;
+    --blue-300: #7cc8fb;
+    --blue-400: #38adf6;
+    --blue-500: #0e92e0;
+    --blue-600: #0274c0;
+    --blue-700: #035d9b;
+    --text-dark: #0a2540;
+    --text-mid: #3a5270;
+    --text-light: #7a92aa;
+    --border: #c8e2f7;
+    --radius: 14px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { overflow-x: hidden; }
+
+  script { display: none !important; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: linear-gradient(135deg, #e8f5ff 0%, #f0faff 50%, #dbeffe 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 40px 16px 60px;
+  }
+
+  .form-wrapper { width: 100%; max-width: 680px; }
+
+  /* HEADER */
+  .form-header {
+    text-align: center; margin-bottom: 32px;
+    animation: fadeDown 0.6s ease both;
+  }
+
+  .institute-logo {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 14px; font-size: 32px;
+    box-shadow: 0 6px 22px rgba(14,146,224,0.32);
+  }
+
+  .institute-tagline {
+    font-size: 11.5px; font-weight: 600; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--blue-500); margin-bottom: 8px;
+  }
+
+  .institute-name {
+    font-family: 'Playfair Display', serif; font-size: 32px;
+    color: var(--text-dark); line-height: 1.15; margin-bottom: 8px;
+  }
+
+  .form-header .sub { color: var(--text-mid); font-size: 14px; font-weight: 300; }
+
+  /* STEPS */
+  .step-indicator {
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 28px; animation: fadeDown 0.6s 0.1s ease both;
+  }
+
+  .step { display: flex; align-items: center; gap: 9px; }
+
+  .step-circle {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 14px; transition: all 0.35s;
+    border: 2px solid var(--blue-200); background: var(--white); color: var(--text-light);
+  }
+
+  .step.active .step-circle { background: var(--blue-500); border-color: var(--blue-500); color: white; box-shadow: 0 4px 12px rgba(14,146,224,0.35); }
+  .step.done   .step-circle { background: var(--blue-100); border-color: var(--blue-300); color: var(--blue-600); }
+
+  .step-label { font-size: 13px; font-weight: 500; color: var(--text-light); transition: color 0.3s; }
+  .step.active .step-label { color: var(--blue-600); font-weight: 600; }
+  .step.done   .step-label { color: var(--blue-400); }
+
+  .step-line { flex: 1; height: 2px; background: var(--blue-200); margin: 0 12px; max-width: 80px; transition: background 0.4s; }
+  .step-line.done { background: var(--blue-400); }
+
+  /* PROGRESS */
+  .progress-bar { width: 100%; height: 4px; background: var(--blue-100); border-radius: 2px; margin-bottom: 28px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue-400), var(--blue-600)); border-radius: 2px; transition: width 0.5s ease; }
+
+  /* CARD */
+  .form-card {
+    background: var(--white); border-radius: 24px; padding: 40px;
+    box-shadow: 0 8px 40px rgba(14,146,224,0.12), 0 1px 3px rgba(14,146,224,0.08);
+    border: 1px solid rgba(200,226,247,0.6);
+    animation: fadeUp 0.5s 0.15s ease both;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif; font-size: 20px;
+    color: var(--text-dark); margin-bottom: 24px; padding-bottom: 14px;
+    border-bottom: 2px solid var(--blue-100);
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .section-title .icon {
+    width: 34px; height: 34px; background: var(--blue-100); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
+  }
+
+  /* FIELDS */
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .field-grid.full { grid-template-columns: 1fr; }
+  .field-group { display: flex; flex-direction: column; gap: 7px; }
+
+  label {
+    font-size: 12px; font-weight: 600; color: var(--text-mid);
+    letter-spacing: 0.5px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  label .optional {
+    font-size: 10px; color: var(--text-light); font-weight: 400;
+    text-transform: none; letter-spacing: 0;
+    background: var(--blue-50); padding: 1px 8px;
+    border-radius: 20px; border: 1px solid var(--blue-100);
+  }
+
+  input, select, textarea {
+    width: 100%; padding: 12px 16px;
+    border: 1.5px solid var(--border); border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif; font-size: 14.5px;
+    color: var(--text-dark); background: var(--blue-50);
+    transition: all 0.25s; outline: none;
+    -webkit-appearance: none; appearance: none;
+  }
+
+  input::placeholder, textarea::placeholder { color: #b0c8dc; }
+
+  #name, #fname { text-transform: uppercase; }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--blue-400); background: var(--white);
+    box-shadow: 0 0 0 4px rgba(14,146,224,0.10);
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230e92e0' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    padding-right: 42px; cursor: pointer;
+  }
+
+  textarea { resize: vertical; min-height: 88px; }
+
+  .field-group.error input,
+  .field-group.error select,
+  .field-group.error textarea { border-color: #e05c5c; background: #fff5f5; }
+
+  .error-msg { font-size: 11.5px; color: #e05c5c; display: none; }
+  .field-group.error .error-msg { display: block; }
+
+  /* BUTTONS */
+  .form-actions {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--blue-100); gap: 16px;
+  }
+
+  .btn {
+    padding: 13px 28px; border-radius: 50px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+
+  .btn-primary { background: linear-gradient(135deg, var(--blue-400), var(--blue-600)); color: white; box-shadow: 0 4px 14px rgba(14,146,224,0.35); flex: 1; justify-content: center; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(14,146,224,0.45); }
+
+  .btn-secondary { background: var(--blue-50); color: var(--blue-600); border: 1.5px solid var(--blue-200); }
+  .btn-secondary:hover { background: var(--blue-100); }
+
+  .btn-submit { background: linear-gradient(135deg, #0b9e67, #0e92e0); color: white; box-shadow: 0 4px 14px rgba(11,158,103,0.30); flex: 1; justify-content: center; }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(11,158,103,0.40); }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* UPLOAD */
+  .upload-zone {
+    border: 2px dashed var(--blue-300); border-radius: var(--radius);
+    background: var(--blue-50); padding: 28px 20px;
+    text-align: center; cursor: pointer; transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+
+  .upload-zone:hover, .upload-zone.dragging { border-color: var(--blue-500); background: var(--blue-100); transform: scale(1.01); }
+  .upload-zone.upload-error { border-color: #e05c5c; background: #fff5f5; }
+
+  .upload-zone input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer;
+    width: 100%; height: 100%; padding: 0; border: none; background: none;
+  }
+
+  .upload-icon { font-size: 34px; margin-bottom: 10px; display: block; }
+  .upload-zone h3 { font-size: 14.5px; color: var(--text-dark); font-weight: 600; margin-bottom: 5px; }
+  .upload-zone p  { font-size: 12.5px; color: var(--text-light); }
+
+  .file-types { display: inline-flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; justify-content: center; }
+  .file-types span { background: var(--blue-100); color: var(--blue-600); font-size: 10.5px; font-weight: 600; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--blue-200); }
+
+  .upload-preview { display: none; align-items: center; gap: 12px; background: var(--blue-50); border: 1.5px solid var(--blue-200); border-radius: var(--radius); padding: 13px 17px; margin-top: 10px; }
+  .upload-preview.visible { display: flex; }
+
+  .preview-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--blue-100); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .preview-img  { width: 42px; height: 42px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+
+  .preview-info { flex: 1; min-width: 0; }
+  .preview-name { font-size: 13px; font-weight: 600; color: var(--text-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .preview-size { font-size: 11px; color: var(--text-light); }
+
+  .preview-remove { width: 28px; height: 28px; border-radius: 50%; background: #ffe4e4; color: #e05c5c; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; transition: background 0.2s; }
+  .preview-remove:hover { background: #ffd0d0; }
+
+  .upload-err-msg { font-size: 11.5px; color: #e05c5c; display: none; margin-top: 5px; }
+  .upload-err-msg.show { display: block; }
+
+  /* SUCCESS CARD */
+  .success-card {
+    background: var(--white); border-radius: 24px;
+    box-shadow: 0 8px 40px rgba(14,146,224,0.12);
+    border: 1px solid rgba(200,226,247,0.6);
+    overflow: hidden; display: none;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .success-top {
+    background: linear-gradient(135deg, var(--blue-500), var(--blue-700));
+    padding: 48px 40px 36px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+
+  .success-top::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 16px);
+  }
+
+  .success-check {
+    width: 78px; height: 78px; border-radius: 50%;
+    background: rgba(255,255,255,0.18); border: 3px solid rgba(255,255,255,0.50);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px; font-size: 33px;
+    animation: popIn 0.5s 0.2s ease both; opacity: 0; animation-fill-mode: both;
+  }
+
+  .success-top h2 { font-family: 'Playfair Display', serif; font-size: 26px; color: white; margin-bottom: 8px; }
+  .success-top p  { font-size: 14px; color: rgba(255,255,255,0.82); line-height: 1.65; }
+
+  .success-body { padding: 36px 40px; }
+
+  /* Visit box */
+  .visit-box { border: 2px solid var(--blue-200); border-radius: 18px; overflow: hidden; margin-bottom: 24px; }
+
+  .visit-header {
+    background: var(--blue-50); padding: 16px 22px;
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--blue-200);
+  }
+
+  .visit-hicon { width: 42px; height: 42px; border-radius: 12px; background: var(--blue-100); display: flex; align-items: center; justify-content: center; font-size: 21px; flex-shrink: 0; }
+  .visit-header h3 { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--text-dark); margin-bottom: 2px; }
+  .visit-header p  { font-size: 12px; color: var(--text-light); }
+
+  .visit-body { padding: 22px; }
+
+  .visit-msg { font-size: 15px; color: var(--text-mid); line-height: 1.75; margin-bottom: 22px; }
+  .visit-msg strong { color: var(--blue-600); }
+
+  .contact-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 16px; border-radius: 12px;
+    background: var(--blue-50); border: 1px solid var(--blue-100);
+    margin-bottom: 10px; text-decoration: none; transition: all 0.2s;
+  }
+  .contact-row:hover { background: var(--blue-100); border-color: var(--blue-200); transform: translateX(3px); }
+
+  .contact-row-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--blue-100); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+  .contact-row-label { font-size: 10.5px; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .contact-row-value { font-size: 13.5px; color: var(--text-dark); font-weight: 500; }
+
+  .map-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, var(--blue-400), var(--blue-600));
+    color: white; text-decoration: none; border-radius: 12px;
+    padding: 14px 20px; margin-top: 6px;
+    font-size: 14px; font-weight: 600; transition: all 0.25s;
+    box-shadow: 0 4px 14px rgba(14,146,224,0.28);
+  }
+  .map-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(14,146,224,0.40); }
+
+  .success-actions { text-align: center; padding-top: 4px; }
+
+  .btn-reset {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--blue-50); color: var(--blue-600);
+    border: 1.5px solid var(--blue-200); border-radius: 50px;
+    padding: 11px 26px; font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-reset:hover { background: var(--blue-100); }
+
+  /* ANIMATIONS */
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeUp   { from { opacity:0; transform:translateY(20px);  } to { opacity:1; transform:translateY(0); } }
+  @keyframes popIn    { 0%{transform:scale(0);opacity:0;} 70%{transform:scale(1.1);} 100%{transform:scale(1);opacity:1;} }
+  @keyframes spin     { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
+
+  @media (max-width: 560px) {
+    .form-card { padding: 24px 16px; }
+    .success-top, .success-body { padding-left: 20px; padding-right: 20px; }
+    .field-grid { grid-template-columns: 1fr; }
+    .institute-name { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+<div class="form-wrapper">
+
+  <!-- HEADER -->
+  <div class="form-header">
+    <div class="institute-logo">🎓</div>
+    <div class="institute-tagline">Registration Portal</div>
+    <h1 class="institute-name">Chetana Shiksha Niketan</h1>
+    <p class="sub">Please fill in all details carefully to complete your registration</p>
+  </div>
+
+  <!-- STEPS -->
+  <div class="step-indicator" id="stepIndicator">
+    <div class="step active" id="step1">
+      <div class="step-circle">1</div>
+      <span class="step-label">Personal Info</span>
+    </div>
+    <div class="step-line" id="stepLine"></div>
+    <div class="step" id="step2">
+      <div class="step-circle">2</div>
+      <span class="step-label">Documents</span>
+    </div>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar" id="progressBar">
+    <div class="progress-fill" id="progressFill" style="width:50%"></div>
+  </div>
+
+  <!-- MAIN CARD -->
+  <div class="form-card" id="mainCard">
+
+    <!-- PAGE 1 -->
+    <div class="page active" id="page1">
+      <div class="section-title"><div class="icon">👤</div>Personal Details</div>
+
+      <!-- Grid 1: Name & Father's Name -->
+      <div class="field-grid">
+        <div class="field-group" id="fg-name">
+          <label>Full Name <span style="color:#e05c5c">*</span></label>
+          <input type="text" id="name" placeholder="Enter your full name" oninput="this.value=this.value.toUpperCase()">
+          <span class="error-msg">Please enter your full name</span>
+        </div>
+        <div class="field-group" id="fg-fname">
+          <label>Father's Name <span style="color:#e05c5c">*</span></label>
+          <input type="text" id="fname" placeholder="Enter father's name" oninput="this.value=this.value.toUpperCase()">
+          <span class="error-msg">Please enter father's name</span>
+        </div>
+      </div>
+
+      <!-- Grid 2: Gender & Class -->
+      <div class="field-grid">
+        <div class="field-group" id="fg-gender">
+          <label>Gender <span style="color:#e05c5c">*</span></label>
+          <select id="gender">
+            <option value="" disabled selected>— Select Gender —</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <span class="error-msg">Please select a gender</span>
+        </div>
+        <div class="field-group" id="fg-class">
+          <label>Class <span style="color:#e05c5c">*</span></label>
+          <select id="class">
+            <option value="" disabled selected>— Select Class —</option>
+            <option>Class 1</option><option>Class 2</option><option>Class 3</option>
+            <option>Class 4</option><option>Class 5</option><option>Class 6</option>
+            <option>Class 7</option><option>Class 8</option><option>Class 9</option>
+            <option>Class 10</option><option>Class 11</option><option>Class 12</option>
+          </select>
+          <span class="error-msg">Please select a class</span>
+        </div>
+      </div>
+
+      <!-- Grid 3: DOB & Mobile -->
+      <div class="field-grid">
+        <div class="field-group" id="fg-dob">
+          <label>Date of Birth <span style="color:#e05c5c">*</span></label>
+          <input type="date" id="dob">
+          <span class="error-msg">Please enter date of birth</span>
+        </div>
+        <div class="field-group" id="fg-mobile">
+          <label>Mobile Number <span style="color:#e05c5c">*</span></label>
+          <input type="tel" id="mobile" placeholder="e.g. 9876543210" maxlength="10">
+          <span class="error-msg">Enter a valid 10-digit mobile number</span>
+        </div>
+      </div>
+
+      <!-- Grid 4: Mobile 2 & Email -->
+      <div class="field-grid">
+        <div class="field-group">
+          <label>Second Mobile <span class="optional">Optional</span></label>
+          <input type="tel" id="mobile2" placeholder="Alternate number" maxlength="10">
+        </div>
+        <div class="field-group" id="fg-email">
+          <label>E-mail Address <span class="optional">Optional</span></label>
+          <input type="email" id="email" placeholder="example@email.com">
+          <span class="error-msg">Please enter a valid email address</span>
+        </div>
+      </div>
+
+      <!-- Grid 5: Religion & PIN -->
+      <div class="field-grid">
+        <div class="field-group">
+          <label>Religion <span class="optional">Optional</span></label>
+          <input type="text" id="religion" placeholder="e.g. Hindu, Muslim, Christian...">
+        </div>
+        <div class="field-group" id="fg-pin">
+          <label>PIN / ZIP Code <span style="color:#e05c5c">*</span></label>
+          <input type="text" id="pin" placeholder="700001" maxlength="10">
+          <span class="error-msg">Enter a valid PIN code</span>
+        </div>
+      </div>
+
+      <!-- Grid 6: Address (Full Width) -->
+      <div class="field-grid full">
+        <div class="field-group" id="fg-address">
+          <label>Address <span style="color:#e05c5c">*</span></label>
+          <textarea id="address" placeholder="House No., Street, Village / Town, District..."></textarea>
+          <span class="error-msg">Please enter your address</span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <span style="font-size:12.5px;color:var(--text-light);"><span style="color:#e05c5c">*</span> Required fields</span>
+        <button class="btn btn-primary" onclick="goToPage2()">
+          Next: Documents
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page" id="page2">
+      <div class="section-title"><div class="icon">📁</div>Document Upload</div>
+
+      <!-- Passport Photo -->
+      <div style="margin-bottom:28px;">
+        <label style="margin-bottom:10px;display:block;">
+          Passport Size Photo <span style="color:#e05c5c">*</span>
+        </label>
+        <div class="upload-zone" id="photoZone"
+          ondragover="handleDragOver(event,'photoZone')"
+          ondragleave="handleDragLeave('photoZone')"
+          ondrop="handleDrop(event,'photoInput','photoPreview','photoZone','photoErr')">
+          <input type="file" id="photoInput" accept="image/*" onchange="handleFile(this,'photoPreview','photoZone','photoErr')">
+          <span class="upload-icon">🖼️</span>
+          <h3>Upload Passport Size Photo</h3>
+          <p>Drag & drop or click to browse</p>
+          <div class="file-types"><span>JPG</span><span>JPEG</span><span>PNG</span></div>
+        </div>
+        <span class="upload-err-msg" id="photoErr">Please upload your passport size photo</span>
+        <div class="upload-preview" id="photoPreview">
+          <img class="preview-img" id="photoThumb" src="" alt="">
+          <div class="preview-info">
+            <div class="preview-name" id="photoName">—</div>
+            <div class="preview-size" id="photoSize">—</div>
+          </div>
+          <button class="preview-remove" onclick="removeFile('photoInput','photoPreview','photoZone')" title="Remove">✕</button>
+        </div>
+      </div>
+
+      <!-- ID Document -->
+      <div>
+        <label style="margin-bottom:14px;display:block;">
+          Identification Document <span style="color:#e05c5c">*</span>
+        </label>
+
+        <div class="field-group" id="fg-doctype" style="margin-bottom:16px;max-width:320px;">
+          <label>Document Type <span style="color:#e05c5c">*</span></label>
+          <select id="doctype">
+            <option value="" disabled selected>— Select Document Type —</option>
+            <option value="aadhaar">Aadhaar Card</option>
+            <option value="birth">Birth Certificate</option>
+            <option value="pan">PAN Card</option>
+            <option value="school_id">School ID Card</option>
+          </select>
+          <span class="error-msg">Please select a document type</span>
+        </div>
+
+        <div class="upload-zone" id="docZone"
+          ondragover="handleDragOver(event,'docZone')"
+          ondragleave="handleDragLeave('docZone')"
+          ondrop="handleDrop(event,'docInput','docPreview','docZone','docErr')">
+          <input type="file" id="docInput" accept="image/*,.pdf" onchange="handleFile(this,'docPreview','docZone','docErr')">
+          <span class="upload-icon">📄</span>
+          <h3>Upload Identification Document</h3>
+          <p>Drag & drop or click to browse</p>
+          <div class="file-types"><span>PDF</span><span>JPG</span><span>PNG</span></div>
+        </div>
+        <span class="upload-err-msg" id="docErr">Please upload an identification document</span>
+        <div class="upload-preview" id="docPreview">
+          <div class="preview-icon">📄</div>
+          <div class="preview-info">
+            <div class="preview-name" id="docName">—</div>
+            <div class="preview-size" id="docSize">—</div>
+          </div>
+          <button class="preview-remove" onclick="removeFile('docInput','docPreview','docZone')" title="Remove">✕</button>
+        </div>
+      </div>
+
+      <!-- Info note -->
+      <div style="margin-top:22px;padding:13px 17px;background:var(--blue-50);border:1.5px solid var(--blue-100);border-radius:12px;display:flex;gap:10px;align-items:flex-start;">
+        <span style="font-size:17px;flex-shrink:0;">ℹ️</span>
+        <p style="font-size:12.5px;color:var(--text-mid);line-height:1.6;margin:0;">
+          Documents must be <strong>clearly visible</strong>, not blurred, with all corners in frame.
+          Accepted formats: <strong>JPG, PNG, PDF</strong>. Max file size: <strong>500 KB</strong>.
+        </p>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-secondary" onclick="goToPage1()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          Back
+        </button>
+        <button class="btn btn-submit" onclick="submitForm()">
+          Submit Registration
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /mainCard -->
+
+
+  <!-- SUCCESS CARD -->
+  <div class="success-card" id="successCard">
+
+    <div class="success-top">
+      <div class="success-check">✓</div>
+      <h2>Registration Successful!</h2>
+      <p>Your form has been submitted successfully.<br>We look forward to welcoming you at Chetana Shiksha Niketan.</p>
+      <div id="studentIdBadge" style="margin-top:18px;display:inline-block;background:rgba(255,255,255,0.18);border:2px solid rgba(255,255,255,0.5);border-radius:12px;padding:10px 24px;">
+        <div style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-bottom:4px;">Student ID</div>
+        <div id="studentIdDisplay" style="font-size:22px;font-weight:700;color:white;letter-spacing:2px;font-family:'DM Sans',sans-serif;">—</div>
+      </div>
+    </div>
+
+    <div class="success-body">
+
+      <div class="visit-box">
+        <div class="visit-header">
+          <div class="visit-hicon">🏫</div>
+          <div>
+            <h3>Please Visit Our Coaching Centre</h3>
+            <p>Complete your admission in person</p>
+          </div>
+        </div>
+
+        <div class="visit-body">
+          <p class="visit-msg">
+            Thank you for registering with <strong>Chetana Shiksha Niketan</strong>! 🎉<br><br>
+            To finalise your admission, kindly <strong>visit our coaching centre</strong> with your
+            <strong>original documents</strong> and a printout or screenshot of this registration.
+            Our team will guide you through the next steps and we would be delighted to welcome you in person!
+          </p>
+
+          <!-- Phone Call -->
+          <a class="contact-row" href="tel:+919378029299">
+            <div class="contact-row-icon">📞</div>
+            <div>
+              <div class="contact-row-label">Call Us</div>
+              <div class="contact-row-value">+91 93780 29299</div>
+            </div>
+          </a>
+
+          <!-- Google Maps -->
+          <a class="map-btn" href="https://maps.app.goo.gl/5LYXckT5QcutnkNY6" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+            Get Directions — Open in Google Maps
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="margin-left:auto;flex-shrink:0;">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+
+        </div>
+      </div>
+
+      <div class="success-actions">
+        <button id="btnDownloadPdf" class="btn btn-primary" onclick="reDownloadPDF()" style="margin-bottom:12px;width:100%;max-width:340px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download / Re-open Admission PDF
+        </button>
+        <br>
+        <button class="btn-reset" onclick="resetForm()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          Register Another Student
+        </button>
+      </div>
+
+    </div>
+  </div><!-- /successCard -->
+
+</div>
+
+<script>
+
+  /* ================================================================
+     ✅ MAKE.COM WEBHOOK URL
+     ================================================================ */
+
+  const WEBHOOK_URL = "https://hook.eu1.make.com/etqle452jfrswvipttqol9p37aecci76";
+
+  /* ================================================================ */
+
+  /* Store last generated PDF data so user can re-download */
+  let _lastPdfData = null;
+
+  /* ─── Student ID Generator (year auto-updates each year) ──────── */
+  function generateStudentId() {
+    const year = new Date().getFullYear(); // auto: 2026, 2027, 2028...
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let suffix = '';
+    for (let i = 0; i < 4; i++) {
+      suffix += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return 'CNS' + year + suffix;
+  }
+
+  /* ─── PDF Generator — matches HTML template design exactly ──────── */
+  function generatePDF(formData) {
+    const { jsPDF } = window.jspdf;
+    const doc  = new jsPDF({ unit: 'mm', format: 'a4' });
+    const pw   = 210;           // page width
+    const ph   = 297;           // page height
+    const bx   = 8;             // outer border x
+    const by   = 8;             // outer border y
+    const bw   = pw - 16;       // outer border width  (194mm)
+    const bh   = ph - 16;       // outer border height (281mm)
+    const lm   = 14;            // inner left margin
+    const rm   = pw - 14;       // inner right x
+    const cw   = rm - lm;       // content width (182mm)
+
+    // ── OUTER BORDER (matches form-container border: 3px solid #000) ─
+    doc.setDrawColor(0);
+    doc.setLineWidth(0.9);
+    doc.rect(bx, by, bw, bh, 'D');
+
+    let y = by + 7;   // start content just inside border
+
+    // ── HEADER ───────────────────────────────────────────────────────
+    doc.setFontSize(22);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0);
+    doc.text('CHETANA SHIKSHA NIKETAN', pw / 2, y, { align: 'center' });
+    y += 7;
+
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Jibanti, Kandi, Murshidabad, West Bengal - 742136', pw / 2, y, { align: 'center' });
+    y += 7;
+
+    // Header bottom border (2px in HTML)
+    doc.setLineWidth(0.6);
+    doc.line(lm, y, rm, y);
+    y += 8;
+
+    // ── FORM TITLE ────────────────────────────────────────────────────
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0);
+    doc.text('Student Registration / Admission Form', pw / 2, y, { align: 'center' });
+    y += 5;
+
+    // ── STUDENT ID — bold, centered, prominent ────────────────────────
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0);
+    doc.text('Student ID :', pw / 2 - 2, y + 5, { align: 'right' });
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text(formData.studentId || '—', pw / 2, y + 5, { align: 'left' });
+    y += 12;
+
+    // ── TOP SECTION: fields (left) + photo box (right) ────────────────
+    const photoW  = 35;   // photo box width  mm
+    const photoH  = 44;   // photo box height mm  (≈ 140×170 ratio)
+    const photoX  = rm - photoW;
+    const fieldsW = cw - photoW - 8;   // 8mm gap between fields & photo
+
+    // Photo box border
+    doc.setDrawColor(0);
+    doc.setLineWidth(0.5);
+    doc.rect(photoX, y, photoW, photoH, 'D');
+
+    // Embed student photo if available, else show placeholder text
+    if (formData.photoBase64 && formData.photoBase64.length > 100) {
+      try {
+        const fmt = (formData.photoMimeType || '').includes('png') ? 'PNG' : 'JPEG';
+        doc.addImage(formData.photoBase64, fmt, photoX + 0.5, y + 0.5, photoW - 1, photoH - 1);
+      } catch(e) {
+        doc.setFontSize(10); doc.setFont('helvetica', 'bold');
+        doc.text('PHOTO', photoX + photoW / 2, y + photoH / 2 + 2, { align: 'center' });
+      }
+    } else {
+      doc.setFontSize(10); doc.setFont('helvetica', 'bold');
+      doc.text('PHOTO', photoX + photoW / 2, y + photoH / 2 + 2, { align: 'center' });
+    }
+
+    // ── Helper: draw one field (bold label + underline, HTML style) ───
+    const halfW = (fieldsW - 6) / 2;  // two-column half width (6mm gap)
+    const rowH  = 13;                 // row height mm
+    let   fy    = y;                  // fields Y cursor
+
+    function drawField(fx, fw, label, value) {
+      // Bold label
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0);
+      doc.text(label, fx, fy + 4);
+      // Value text
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      const val = (value && value !== '—' && value.trim() !== '') ? value : '';
+      if (val) {
+        const lines = doc.splitTextToSize(val, fw - 2);
+        doc.text(lines[0], fx, fy + 10);
+      }
+      // Underline only (border-bottom, just like HTML input)
+      doc.setDrawColor(0);
+      doc.setLineWidth(0.5);
+      doc.line(fx, fy + 11.5, fx + fw, fy + 11.5);
+    }
+
+    // Row 1 — Student Name | Father's Name
+    drawField(lm, halfW, 'Student Name', formData.fullName);
+    drawField(lm + halfW + 6, halfW, "Father's Name", formData.fathersName);
+    fy += rowH;
+
+    // Row 2 — Student ID (already shown top, but keep in fields) | Class
+    drawField(lm, halfW, 'Student ID', formData.studentId);
+    drawField(lm + halfW + 6, halfW, 'Class', formData.class);
+    fy += rowH;
+
+    // Row 3 — Date of Birth | Gender
+    const dobFmt = formData.dateOfBirth
+      ? new Date(formData.dateOfBirth + 'T00:00:00')
+          .toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })
+      : '';
+    drawField(lm, halfW, 'Date of Birth', dobFmt);
+    drawField(lm + halfW + 6, halfW, 'Gender', formData.gender);
+    fy += rowH;
+
+    // Row 4 — Phone Number | Admission Date
+    const admDate = formData.timestamp ? formData.timestamp.split(',')[0] : '';
+    drawField(lm, halfW, 'Phone Number', formData.mobile);
+    drawField(lm + halfW + 6, halfW, 'Admission Date', admDate);
+    fy += rowH;
+
+    // After 4 rows, photo box ends (y + photoH). Move past it if needed.
+    if (fy < y + photoH + 3) fy = y + photoH + 3;
+
+    // Row 5 — Email Address (full width)
+    drawField(lm, fieldsW, 'Email Address', formData.email !== '—' ? formData.email : '');
+    fy += rowH;
+
+    // Row 6 — Address (full width, two lines)
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0);
+    doc.text('Address', lm, fy + 4);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    const addrFull = doc.splitTextToSize(formData.address || '', fieldsW - 2);
+    if (addrFull.length > 0) doc.text(addrFull.slice(0, 2), lm, fy + 10);
+    doc.setLineWidth(0.5);
+    doc.line(lm, fy + 11.5, lm + fieldsW, fy + 11.5);  // line 1
+    doc.line(lm, fy + 17,   lm + fieldsW, fy + 17);    // line 2 (textarea effect)
+    fy += 22;
+
+    // ── INSTRUCTIONS (border-top, then text) ──────────────────────────
+    fy += 6;
+    doc.setLineWidth(0.6);
+    doc.setDrawColor(0);
+    doc.line(lm, fy, rm, fy);
+    fy += 6;
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Instructions:', lm, fy);
+    fy += 6;
+
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    const instrParts = [
+      `Please print out this form and bring it with you when you visit Chetana Shiksha Niketan for admission.`,
+      `Dear ${formData.fullName || 'Student'}, please visit Chetana Shiksha Niketan within 7 days.`,
+      `Keep this form as a student admission or registration record.`
+    ];
+    instrParts.forEach(part => {
+      const lines = doc.splitTextToSize(part, cw - 2);
+      doc.text(lines, lm, fy);
+      fy += lines.length * 5.5 + 3;
+    });
+
+    // ── SIGNATURE SECTION ─────────────────────────────────────────────
+    fy += 12;   // space for signing
+    const sigW = 65;
+
+    // Left — Student Signature
+    doc.setLineWidth(0.6);
+    doc.setDrawColor(0);
+    doc.line(lm, fy, lm + sigW, fy);
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0);
+    doc.text('Student Signature', lm + sigW / 2, fy + 6, { align: 'center' });
+
+    // Right — Authorized Signature
+    doc.line(rm - sigW, fy, rm, fy);
+    doc.text('Authorized Signature', rm - sigW / 2, fy + 6, { align: 'center' });
+    fy += 16;
+
+    // ── CONTACT ───────────────────────────────────────────────────────
+    fy += 6;
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0);
+    doc.text('For any help call - +91 93780 29299 / +91 99334 68587', pw / 2, fy, { align: 'center' });
+
+    return doc;
+  }
+
+  /* ─── Re-download handler ─────────────────────────────────────── */
+  function reDownloadPDF() {
+    if (_lastPdfData) {
+      const doc = generatePDF(_lastPdfData);
+      doc.save(`${_lastPdfData.studentId}_Admission_Form.pdf`);
+    }
+  }
+
+  /* ─── Navigation ──────────────────────────────────────────────── */
+  function goToPage2() {
+    if (!validatePage1()) return;
+    document.getElementById('page1').classList.remove('active');
+    document.getElementById('page2').classList.add('active');
+    document.getElementById('step1').classList.remove('active');
+    document.getElementById('step1').classList.add('done');
+    document.getElementById('step2').classList.add('active');
+    document.getElementById('stepLine').classList.add('done');
+    document.getElementById('progressFill').style.width = '100%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goToPage1() {
+    document.getElementById('page2').classList.remove('active');
+    document.getElementById('page1').classList.add('active');
+    document.getElementById('step2').classList.remove('active');
+    document.getElementById('step1').classList.remove('done');
+    document.getElementById('step1').classList.add('active');
+    document.getElementById('stepLine').classList.remove('done');
+    document.getElementById('progressFill').style.width = '50%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* Page 1 validation */
+  function validatePage1() {
+    let valid = true;
+    const checks = [
+      { id:'name',    fg:'fg-name',    test: v => v.trim().length >= 2 },
+      { id:'fname',   fg:'fg-fname',   test: v => v.trim().length >= 2 },
+      { id:'gender',  fg:'fg-gender',  test: v => v !== '' },
+      { id:'class',   fg:'fg-class',   test: v => v !== '' },
+      { id:'dob',     fg:'fg-dob',     test: v => v !== '' },
+      { id:'mobile',  fg:'fg-mobile',  test: v => /^[6-9]\d{9}$/.test(v) },
+      { id:'address', fg:'fg-address', test: v => v.trim().length >= 5 },
+      { id:'pin',     fg:'fg-pin',     test: v => /^\d{4,10}$/.test(v) },
+    ];
+    checks.forEach(c => {
+      const el = document.getElementById(c.id);
+      const fg = document.getElementById(c.fg);
+      if (!c.test(el.value)) {
+        fg.classList.add('error'); valid = false;
+        el.addEventListener('input',  () => fg.classList.remove('error'), { once: true });
+        el.addEventListener('change', () => fg.classList.remove('error'), { once: true });
+      } else { fg.classList.remove('error'); }
+    });
+    if (!valid) document.querySelector('.field-group.error')?.scrollIntoView({ behavior:'smooth', block:'center' });
+    return valid;
+  }
+
+  /* Page 2 validation */
+  function validatePage2() {
+    let valid = true;
+
+    const photoOk = !!document.getElementById('photoInput').files.length;
+    document.getElementById('photoErr').classList.toggle('show', !photoOk);
+    document.getElementById('photoZone').classList.toggle('upload-error', !photoOk);
+    if (!photoOk) valid = false;
+
+    const fg = document.getElementById('fg-doctype');
+    if (!document.getElementById('doctype').value) {
+      fg.classList.add('error'); valid = false;
+      document.getElementById('doctype').addEventListener('change', () => fg.classList.remove('error'), { once: true });
+    } else { fg.classList.remove('error'); }
+
+    const docOk = !!document.getElementById('docInput').files.length;
+    document.getElementById('docErr').classList.toggle('show', !docOk);
+    document.getElementById('docZone').classList.toggle('upload-error', !docOk);
+    if (!docOk) valid = false;
+
+    return valid;
+  }
+
+  /* File handlers (Added Size Validation for 500 KB limit) */
+  function handleFile(input, previewId, zoneId, errId) {
+    const file = input.files[0];
+    if (!file) return;
+
+    // === 500 KB SIZE CHECK ===
+    const maxSize = 500 * 1024; // 500 KB in bytes
+    if (file.size > maxSize) {
+      showToast('❌ File is too large! Maximum size allowed is 500 KB.');
+      input.value = ''; // clear input
+      return;
+    }
+
+    document.getElementById(zoneId).style.display = 'none';
+    document.getElementById(zoneId).classList.remove('upload-error');
+    if (errId) document.getElementById(errId).classList.remove('show');
+    const preview = document.getElementById(previewId);
+    preview.classList.add('visible');
+    const isPhoto = (previewId === 'photoPreview');
+    document.getElementById(isPhoto ? 'photoName' : 'docName').textContent = file.name;
+    document.getElementById(isPhoto ? 'photoSize' : 'docSize').textContent = fmtSize(file.size);
+    if (isPhoto && file.type.startsWith('image/')) {
+      const fr = new FileReader();
+      fr.onload = e => { document.getElementById('photoThumb').src = e.target.result; };
+      fr.readAsDataURL(file);
+    }
+  }
+
+  function removeFile(inputId, previewId, zoneId) {
+    document.getElementById(inputId).value = '';
+    document.getElementById(previewId).classList.remove('visible');
+    const z = document.getElementById(zoneId);
+    z.style.display = ''; z.classList.remove('upload-error');
+    if (previewId === 'photoPreview') document.getElementById('photoThumb').src = '';
+  }
+
+  function handleDragOver(e, zoneId) { e.preventDefault(); document.getElementById(zoneId).classList.add('dragging'); }
+  function handleDragLeave(zoneId)   { document.getElementById(zoneId).classList.remove('dragging'); }
+
+  function handleDrop(e, inputId, previewId, zoneId, errId) {
+    e.preventDefault();
+    document.getElementById(zoneId).classList.remove('dragging');
+    const file = e.dataTransfer.files[0]; if (!file) return;
+    const dt = new DataTransfer(); dt.items.add(file);
+    document.getElementById(inputId).files = dt.files;
+    handleFile(document.getElementById(inputId), previewId, zoneId, errId);
+  }
+
+  function fmtSize(b) {
+    if (b < 1024) return b + ' B';
+    if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+    return (b/1048576).toFixed(1) + ' MB';
+  }
+
+  /* Helper function to convert File to Base64 String */
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      if (!file) { resolve({ base64: "", mimeType: "" }); return; }
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve({ base64: reader.result, mimeType: file.type });
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  /* ─── Submit ──────────────────────────────────────────────────── */
+  async function submitForm() {
+    if (!validatePage2()) return;
+
+    const btn = document.querySelector('.btn-submit');
+    const originalHTML = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="animation:spin 0.8s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Uploading... (Please wait)`;
+
+    try {
+      // 1. Get Base64 of Uploaded Files
+      const photoFile = document.getElementById('photoInput').files[0];
+      const docFile   = document.getElementById('docInput').files[0];
+      const photoDataObj = await fileToBase64(photoFile);
+      const docDataObj   = await fileToBase64(docFile);
+
+      // 2. Generate unique student ID
+      const studentId = generateStudentId();
+
+      // 3. Prepare Internal Data for PDF Generation
+      const pdfData = {
+        timestamp:      new Date().toLocaleString('en-IN'),
+        studentId:      studentId,
+        fullName:       document.getElementById('name').value.trim().toUpperCase(),
+        fathersName:    document.getElementById('fname').value.trim().toUpperCase(),
+        gender:         document.getElementById('gender').value,
+        class:          document.getElementById('class').value,
+        dateOfBirth:    document.getElementById('dob').value,
+        mobile:         document.getElementById('mobile').value,
+        email:          document.getElementById('email').value.trim() || '—',
+        address:        document.getElementById('address').value.trim(),
+        pinCode:        document.getElementById('pin').value,
+        photoBase64:    photoDataObj.base64,
+        photoMimeType:  photoDataObj.mimeType
+      };
+
+      // 4. GENERATE THE PDF
+      const pdfDoc = generatePDF(pdfData);
+      
+      // Convert the generated PDF to a Base64 string so we can send it in the webhook
+      const pdfBase64String = pdfDoc.output('datauristring');
+      
+      // 5. PREPARE WEBHOOK DATA
+      const webhookData = {
+        "Timestamp": pdfData.timestamp,
+        "Student ID": studentId,
+        "Full Name": pdfData.fullName,
+        "Father's Name": pdfData.fathersName,
+        "Gender": pdfData.gender,
+        "Class": pdfData.class,
+        "Date of Birth": pdfData.dateOfBirth,
+        "Email": pdfData.email,
+        "Mobile": pdfData.mobile,
+        "PIN Code": pdfData.pinCode,
+        "Address": pdfData.address,
+        "Document Type": document.getElementById('doctype').value,
+
+        // --- FILES FOR MAKE.COM TO UPLOAD ---
+        "Photo File": photoDataObj.base64,
+        "Photo File Name": photoFile?.name || 'photo.jpg',
+        
+        "Document File": docDataObj.base64,
+        "Document File Name": docFile?.name || 'document.pdf',
+        
+        "Admission PDF File": pdfBase64String,
+        "Admission PDF File Name": `${studentId}_Admission_Form.pdf`
+      };
+
+      // 6. SEND TO MAKE.COM WEBHOOK 
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(webhookData)
+      });
+
+      // 7. Store for re-download & Show Success UI
+      _lastPdfData = pdfData;
+      showSuccess(studentId);
+
+      // 8. Auto-download the PDF to the user's device immediately
+      pdfDoc.save(`${studentId}_Admission_Form.pdf`);
+
+    } catch (err) {
+      console.error(err);
+      btn.disabled = false;
+      btn.innerHTML = originalHTML;
+      showToast('❌ Submission failed. Please check your internet connection and try again.');
+    }
+  }
+
+  function showSuccess(studentId) {
+    document.getElementById('mainCard').style.display = 'none';
+    document.getElementById('stepIndicator').style.display = 'none';
+    document.getElementById('progressBar').style.display = 'none';
+    document.getElementById('successCard').style.display = 'block';
+    if (studentId) {
+      document.getElementById('studentIdDisplay').textContent = studentId;
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showToast(msg) {
+    let t = document.getElementById('toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'toast';
+      t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:white;padding:13px 22px;border-radius:50px;font-size:13.5px;font-weight:500;z-index:999;box-shadow:0 6px 24px rgba(0,0,0,0.25);transition:opacity 0.4s;';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.opacity = '1';
+    setTimeout(() => { t.style.opacity = '0'; }, 4000);
+  }
+
+  /* Reset */
+  function resetForm() {
+    _lastPdfData = null;
+    document.getElementById('mainCard').style.display = 'block';
+    document.getElementById('successCard').style.display = 'none';
+    document.getElementById('stepIndicator').style.display = 'flex';
+    document.getElementById('progressBar').style.display = 'block';
+    document.querySelectorAll('input, select, textarea').forEach(el => { el.value = ''; });
+    document.querySelectorAll('.upload-preview').forEach(p => p.classList.remove('visible'));
+    document.querySelectorAll('.upload-zone').forEach(z => { z.style.display = ''; z.classList.remove('upload-error'); });
+    document.getElementById('photoThumb').src = '';
+    document.getElementById('studentIdDisplay').textContent = '—';
+    goToPage1();
+  }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

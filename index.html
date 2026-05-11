@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chetana Shiksha Niketan | Excellence in Education</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blue: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8',
+                            800: '#1e40af', 900: '#1e3a8a', 950: '#172554'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Nunito', 'system-ui', 'sans-serif'],
+                        display: ['Poppins', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+<style>
+/* =============================================
+   GLOBAL FONT
+============================================= */
+body { font-family: 'Nunito', sans-serif; }
+h1,h2,h3,h4,h5,h6,.font-display { font-family: 'Poppins', sans-serif; }
+
+/* =============================================
+   EXISTING ANIMATIONS
+============================================= */
+.fade-in { animation: fadeIn 1s ease-in-out; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-pattern {
+    background-color: #f0f7ff;
+    background-image: radial-gradient(#bfdbfe 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.interactive-card {
+    transition: all 0.25s ease-in-out;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+.interactive-card:hover {
+    box-shadow: 0 10px 25px rgba(59,130,246,0.15);
+    transform: translateY(-4px);
+    border-color: #bfdbfe;
+}
+.interactive-card:active, .interactive-card:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: -15px 0 25px -5px rgba(37,99,235,0.5), 15px 0 25px -5px rgba(37,99,235,0.5);
+    transform: scale(0.98);
+}
+
+/* =============================================
+   SCROLL REVEAL
+============================================= */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.reveal.revealed { opacity: 1; transform: translateY(0); }
+.reveal.reveal-left  { transform: translateX(-40px); }
+.reveal.reveal-right { transform: translateX( 40px); }
+.reveal.reveal-left.revealed,
+.reveal.reveal-right.revealed { transform: translateX(0); }
+
+.reveal-group .reveal:nth-child(1) { transition-delay: 0.05s; }
+.reveal-group .reveal:nth-child(2) { transition-delay: 0.15s; }
+.reveal-group .reveal:nth-child(3) { transition-delay: 0.25s; }
+.reveal-group .reveal:nth-child(4) { transition-delay: 0.35s; }
+
+/* =============================================
+   NEW: FLOATING BLOBS (Hero)
+============================================= */
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    animation: blobFloat 8s ease-in-out infinite;
+    pointer-events: none;
+}
+.blob-1 { animation-delay: 0s;   background: rgba(96,165,250,0.35); }
+.blob-2 { animation-delay: -3s;  background: rgba(99,102,241,0.25); }
+.blob-3 { animation-delay: -6s;  background: rgba(147,197,253,0.30); }
+@keyframes blobFloat {
+    0%,100% { transform: translate(0,0)   scale(1);   }
+    33%      { transform: translate(30px,-25px) scale(1.08); }
+    66%      { transform: translate(-20px,20px) scale(0.94); }
+}
+
+/* =============================================
+   NEW: TYPEWRITER CURSOR
+============================================= */
+.typewriter-cursor::after {
+    content: '|';
+    color: #2563eb;
+    animation: blink 0.75s step-end infinite;
+}
+@keyframes blink {
+    0%,100% { opacity: 1; }
+    50%     { opacity: 0; }
+}
+
+/* =============================================
+   NEW: COUNTER NUMBER
+============================================= */
+.stat-number {
+    display: inline-block;
+    transition: transform 0.1s ease;
+}
+
+/* =============================================
+   NEW: SHIMMER LOADING
+============================================= */
+@keyframes shimmer {
+    0%   { background-position: -1000px 0; }
+    100% { background-position:  1000px 0; }
+}
+.shimmer {
+    background: linear-gradient(90deg, #f0f4ff 25%, #dbeafe 50%, #f0f4ff 75%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* =============================================
+   NEW: PULSE RING
+============================================= */
+.pulse-ring {
+    position: relative;
+}
+.pulse-ring::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 3px solid rgba(37,99,235,0.4);
+    animation: pulseRing 2s ease-out infinite;
+}
+@keyframes pulseRing {
+    0%   { transform: scale(1);   opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 0;   }
+}
+
+/* =============================================
+   NEW: RIPPLE BUTTON
+============================================= */
+.btn-ripple {
+    position: relative;
+    overflow: hidden;
+}
+.btn-ripple .ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    transform: scale(0);
+    animation: rippleAnim 0.6s linear;
+    pointer-events: none;
+}
+@keyframes rippleAnim {
+    to { transform: scale(4); opacity: 0; }
+}
+
+/* =============================================
+   NEW: GRADIENT TEXT
+============================================= */
+.gradient-text {
+    background: linear-gradient(135deg, #2563eb 0%, #60a5fa 50%, #1d4ed8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.gradient-text-animate {
+    background: linear-gradient(270deg, #2563eb, #60a5fa, #1d4ed8, #3b82f6);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s ease infinite;
+}
+@keyframes gradientShift {
+    0%,100% { background-position: 0% 50%;   }
+    50%     { background-position: 100% 50%; }
+}
+
+/* =============================================
+   NEW: STAT CARDS (between hero & gallery)
+============================================= */
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(37,99,235,0.15);
+}
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(96,165,250,0.08) 0%, transparent 60%);
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+.stat-card:hover::before { opacity: 1; }
+
+/* =============================================
+   NEW: STUDENT PORTAL SECTION
+============================================= */
+.portal-tab-btn {
+    position: relative;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+.portal-tab-btn.active {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(37,99,235,0.35);
+    transform: translateY(-2px);
+}
+.portal-tab-btn:not(.active):hover {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.portal-panel {
+    display: none;
+    animation: panelReveal 0.45s ease-out forwards;
+}
+.portal-panel.active { display: block; }
+@keyframes panelReveal {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Timetable */
+.timetable-grid {
+    display: grid;
+    grid-template-columns: 100px repeat(6, 1fr);
+    gap: 4px;
+}
+@media (max-width: 640px) {
+    .timetable-grid { grid-template-columns: 70px repeat(6, 1fr); font-size: 0.65rem; }
+}
+.tt-header {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    padding: 10px 6px;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+}
+.tt-period {
+    background: #eff6ff;
+    border: 1.5px solid #bfdbfe;
+    color: #1e40af;
+    padding: 10px 6px;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.72rem;
+}
+.tt-cell {
+    background: #fff;
+    border: 1.5px solid #e0eaff;
+    padding: 9px 5px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #374151;
+    transition: all 0.2s ease;
+}
+.tt-cell:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    transform: scale(1.04);
+    z-index: 1;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(37,99,235,0.12);
+}
+.tt-cell.break {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #92400e;
+    font-weight: 700;
+    border-color: #fcd34d;
+}
+.tt-cell.lunch {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    color: #065f46;
+    font-weight: 700;
+    border-color: #6ee7b7;
+}
+
+/* Fees Table */
+.fees-row { transition: background 0.2s; }
+.fees-row:hover td { background: #eff6ff !important; }
+.badge-paid   { background: #d1fae5; color: #065f46; }
+.badge-due    { background: #fee2e2; color: #991b1b; }
+.badge-partial{ background: #fef3c7; color: #92400e; }
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Student Card */
+.student-card-anim {
+    animation: cardPop 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+@keyframes cardPop {
+    from { opacity: 0; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* Search Input glow */
+.portal-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
+    border-color: #2563eb;
+}
+
+/* =============================================
+   FORM STYLES
+============================================= */
+textarea::-webkit-scrollbar { width: 8px; }
+textarea::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+textarea::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+textarea::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+.input-group:focus-within i { color: #2563eb; }
+#get-help-card { transition: box-shadow 0.3s ease; }
+#get-help-card:hover { box-shadow: 0 25px 50px rgba(37,99,235,0.15); }
+
+/* =============================================
+   MARQUEE GALLERY 1
+============================================= */
+.marquee-wrapper {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image:         linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+.marquee-track {
+    display: flex;
+    gap: 16px;
+    width: max-content;
+    animation: marquee-scroll 32s linear infinite;
+}
+.marquee-wrapper:hover .marquee-track { animation-play-state: paused; }
+@keyframes marquee-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+.marquee-track img {
+    height: 220px;
+    width: auto;
+    min-width: 300px;
+    object-fit: cover;
+    border-radius: 14px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 18px rgba(37,99,235,0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.marquee-track img:hover {
+    transform: scale(1.04);
+    box-shadow: 0 10px 30px rgba(37,99,235,0.25);
+}
+
+/* =============================================
+   GALLERY 2
+============================================= */
+.photo-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+@media (min-width: 640px)  { .photo-grid { grid-template-columns: repeat(2,1fr); } }
+@media (min-width: 1024px) { .photo-grid { grid-template-columns: repeat(3,1fr); gap: 32px; } }
+.photo-grid-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    background: #fff;
+}
+.photo-grid-item:nth-child(odd)  { border-radius: 20px 20px 20px 120px; }
+.photo-grid-item:nth-child(even) { border-radius: 120px 20px 20px 20px; }
+.photo-grid-item:nth-child(3n)   { border-radius: 20px 120px 20px 20px; }
+.photo-grid-item:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(37,99,235,0.15); }
+.photo-grid-item img {
+    width: 100%; height: 280px; object-fit: cover; display: block;
+    transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+.photo-grid-item:hover img { transform: scale(1.08); }
+.photo-grid-item .photo-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(30,58,138,0.85) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.3s ease;
+    display: flex; align-items: flex-end; padding: 20px;
+}
+.photo-grid-item:hover .photo-overlay { opacity: 1; }
+.photo-overlay span {
+    color: white; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.03em;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* =============================================
+   NEW: NOTICE BOARD TICKER
+============================================= */
+.ticker-wrap {
+    overflow: hidden;
+    white-space: nowrap;
+    background: linear-gradient(90deg, #1e3a8a, #2563eb, #1e3a8a);
+}
+.ticker-text {
+    display: inline-block;
+    animation: tickerMove 28s linear infinite;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+}
+@keyframes tickerMove {
+    0%   { transform: translateX(100vw); }
+    100% { transform: translateX(-100%); }
+}
+
+/* =============================================
+   NEW: PAGE LOADER
+============================================= */
+#page-loader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #fff;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+#page-loader.hidden { opacity: 0; visibility: hidden; }
+.loader-ring {
+    width: 60px; height: 60px;
+    border: 4px solid #dbeafe;
+    border-top: 4px solid #2563eb;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* =============================================
+   NEW: FLOATING ACTION BUTTON (WhatsApp)
+============================================= */
+.fab-whatsapp {
+    position: fixed; bottom: 28px; right: 28px; z-index: 900;
+    width: 56px; height: 56px;
+    background: #25d366;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 20px rgba(37,211,102,0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fabBounce 2s ease-in-out 3s infinite;
+}
+.fab-whatsapp:hover {
+    transform: scale(1.12);
+    box-shadow: 0 10px 30px rgba(37,211,102,0.6);
+    animation: none;
+}
+@keyframes fabBounce {
+    0%,100% { transform: translateY(0);  }
+    50%     { transform: translateY(-6px); }
+}
+
+/* =============================================
+   NEW: SECTION SEPARATOR WAVE
+============================================= */
+.wave-divider { line-height: 0; overflow: hidden; }
+.wave-divider svg { display: block; width: 100%; }
+
+/* =============================================
+   STUDENT PORTAL MODAL OVERLAY
+============================================= */
+#portal-modal-overlay {
+    position: fixed; inset: 0; z-index: 9000;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px 12px 20px;
+    overflow-y: auto;
+    animation: overlayIn 0.3s ease forwards;
+}
+#portal-modal-overlay.open { display: flex; }
+@keyframes overlayIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+#portal-modal-box {
+    width: 100%;
+    max-width: 900px;
+    border-radius: 24px;
+    overflow: hidden;
+    animation: modalSlideIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    position: relative;
+    margin: auto;
+}
+@keyframes modalSlideIn {
+    from { opacity: 0; transform: translateY(40px) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+#portal-close-btn {
+    position: absolute; top: 16px; right: 16px; z-index: 10;
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.15);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white; cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    font-size: 1.2rem; font-weight: 700;
+}
+#portal-close-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.1) rotate(90deg); }
+
+/* =============================================
+   SCROLL-TO-TOP BUTTON
+============================================= */
+#scrollTopBtn {
+    position: fixed; bottom: 96px; right: 28px; z-index: 900;
+    width: 44px; height: 44px;
+    background: white;
+    border: 2px solid #dbeafe;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #2563eb;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    opacity: 0; pointer-events: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+#scrollTopBtn.show { opacity: 1; pointer-events: all; }
+#scrollTopBtn:hover { background: #2563eb; color: white; transform: translateY(-2px); }
+</style>
+</head>
+
+<body class="bg-blue-50 text-gray-800 antialiased selection:bg-blue-200 selection:text-blue-900">
+
+<!-- ============================================================
+     PAGE LOADER
+============================================================ -->
+<div id="page-loader">
+    <div class="loader-ring mb-4"></div>
+    <p class="text-blue-700 font-display font-semibold text-sm tracking-wide">Chetana Shiksha Niketan</p>
+</div>
+
+<!-- ============================================================
+     NOTICE BOARD TICKER
+============================================================ -->
+<div class="ticker-wrap py-2 z-40 relative">
+    <div class="ticker-text px-4">
+        🎓 Admissions Open 2026-27 &nbsp;&nbsp;|&nbsp;&nbsp; 📝 Annual Examination starts 15th June &nbsp;&nbsp;|&nbsp;&nbsp; 🏆 Our students secured top ranks in district level competitions &nbsp;&nbsp;|&nbsp;&nbsp; 💰 Scholarship applications for meritorious students are open &nbsp;&nbsp;|&nbsp;&nbsp; 📅 Parent-Teacher Meeting: 25th May 2026 &nbsp;&nbsp;|&nbsp;&nbsp; 🎨 Annual Cultural Programme: 30th June 2026 &nbsp;&nbsp;|&nbsp;&nbsp; 📞 Call: +91 93780 29299 for more info &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+</div>
+
+<!-- ============================================================
+     NAVIGATION
+============================================================ -->
+<nav class="fixed w-full bg-white/95 backdrop-blur-md shadow-sm z-50 border-b border-blue-100" style="top: 36px;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20">
+            <div class="flex items-center space-x-3">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 md:h-14 md:w-14" style="filter: drop-shadow(0 2px 6px rgba(37,99,235,0.3))">
+                    <path d="M 85,25 A 45,45 0 1,0 85,75 L 68,60 A 22,22 0 1,1 68,40 Z" fill="#2563eb"/>
+                    <text x="30" y="62" font-family="Arial" font-weight="900" font-size="34" fill="#2563eb">S</text>
+                    <text x="54" y="62" font-family="Arial" font-weight="900" font-size="34" fill="#2563eb">N</text>
+                </svg>
+                <div class="flex flex-col">
+                    <span class="text-xl md:text-2xl font-display font-bold text-blue-900 leading-tight">Chetana Shiksha Niketan</span>
+                    <span class="text-xs md:text-sm text-blue-600 font-semibold tracking-wide">Estd. 2006</span>
+                </div>
+            </div>
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home"     class="text-gray-600 hover:text-blue-600 font-semibold transition-colors">Home</a>
+                <a href="#about"    class="text-gray-600 hover:text-blue-600 font-semibold transition-colors">About Us</a>
+                <a href="#academics"class="text-gray-600 hover:text-blue-600 font-semibold transition-colors">Academics</a>
+                <a href="#" onclick="openPortalModal(event)" class="text-gray-600 hover:text-blue-600 font-semibold transition-colors flex items-center gap-1">
+                    <i data-lucide="graduation-cap" class="w-4 h-4"></i> Student Portal
+                </a>
+                <a href="#features" class="text-gray-600 hover:text-blue-600 font-semibold transition-colors">Features</a>
+                <a href="#contact"  class="bg-blue-600 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-blue-700 shadow-md hover:shadow-lg transition-all flex items-center space-x-2 btn-ripple">
+                    <i data-lucide="phone-call" class="w-4 h-4"></i>
+                    <span>Contact Us</span>
+                </a>
+            </div>
+            <!-- Mobile menu button -->
+            <div class="flex items-center md:hidden">
+                <button id="mobile-menu-btn" class="text-gray-600 hover:text-blue-600 focus:outline-none p-2">
+                    <i data-lucide="menu" class="w-7 h-7"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-blue-100 absolute w-full shadow-lg">
+        <div class="px-4 pt-2 pb-6 space-y-2">
+            <a href="#home"      class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50">Home</a>
+            <a href="#about"     class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50">About Us</a>
+            <a href="#academics" class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50">Academics</a>
+            <a href="#" onclick="openPortalModal(event)"    class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50">🎓 Student Portal</a>
+            <a href="#features"  class="block px-3 py-3 rounded-md text-base font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50">Features</a>
+            <a href="#contact"   class="block px-3 py-3 mt-4 rounded-md text-base font-semibold bg-blue-600 text-white text-center hover:bg-blue-700">Contact Us</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ============================================================
+     HERO SECTION
+============================================================ -->
+<section id="home" class="pt-44 pb-20 md:pt-52 md:pb-28 hero-pattern relative overflow-hidden">
+    <!-- Animated Blobs -->
+    <div class="blob blob-1 w-80 h-80" style="top:-80px; right:-80px;"></div>
+    <div class="blob blob-2 w-64 h-64" style="bottom:-60px; left:-60px;"></div>
+    <div class="blob blob-3 w-48 h-48" style="top:40%; right:10%;"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center max-w-4xl mx-auto fade-in">
+            <div class="inline-flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow-sm border border-blue-100 mb-6">
+                <span class="flex h-3 w-3 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-600"></span>
+                </span>
+                <span class="text-sm font-display font-semibold text-blue-800">Admissions Open for 2026–27</span>
+            </div>
+
+            <h1 class="text-4xl md:text-6xl font-display font-extrabold text-blue-950 tracking-tight mb-3 leading-tight">
+                Shaping Bright Futures
+            </h1>
+            <h1 class="text-4xl md:text-6xl font-display font-extrabold mb-6 leading-tight">
+                Since <span class="gradient-text-animate">2006</span>
+            </h1>
+
+            <!-- Typewriter subtitle -->
+            <p class="text-lg md:text-xl text-gray-600 mb-4 max-w-3xl mx-auto leading-relaxed">
+                A premier educational institution in Jibanti providing
+            </p>
+            <p class="text-xl md:text-2xl font-display font-bold text-blue-700 mb-10 typewriter-cursor" id="typewriterEl">&nbsp;</p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="chetona_admission_form.html"
+                   class="px-8 py-4 bg-blue-600 text-white rounded-full font-display font-semibold text-lg hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all flex justify-center items-center space-x-2 btn-ripple">
+                    <span>Enroll Now</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+                <a href="#" onclick="openPortalModal(event)"
+                   class="px-8 py-4 bg-white text-blue-700 border-2 border-blue-200 rounded-full font-display font-semibold text-lg hover:bg-blue-50 shadow-sm transition-all flex justify-center items-center space-x-2">
+                    <i data-lucide="user" class="w-5 h-5"></i>
+                    <span>Student Portal</span>
+                </a>
+                <a href="tel:+919378029299"
+                   class="px-8 py-4 bg-white text-blue-700 border border-blue-200 rounded-full font-display font-semibold text-lg hover:bg-blue-50 shadow-sm transition-all flex justify-center items-center space-x-2">
+                    <i data-lucide="phone" class="w-5 h-5"></i>
+                    <span>Call Us</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Wave Bottom -->
+    <div class="wave-divider absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="white"><path d="M0,40 C360,80 1080,0 1440,40 L1440,60 L0,60 Z"/></svg>
+    </div>
+</section>
+
+<!-- ============================================================
+     STAT COUNTERS SECTION
+============================================================ -->
+<section class="py-14 bg-white relative z-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 reveal-group">
+
+            <div class="stat-card bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 text-center border border-blue-200 reveal">
+                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-blue-600 shadow mx-auto mb-3 pulse-ring">
+                    <i data-lucide="users" class="w-6 h-6"></i>
+                </div>
+                <div class="text-3xl md:text-4xl font-display font-black text-blue-700 mb-1">
+                    <span class="stat-number" data-target="500">0</span>+
+                </div>
+                <div class="text-gray-600 font-semibold text-sm">Happy Students</div>
+            </div>
+
+            <div class="stat-card bg-gradient-to-br from-indigo-50 to-blue-100 rounded-2xl p-6 text-center border border-blue-200 reveal">
+                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-indigo-600 shadow mx-auto mb-3">
+                    <i data-lucide="calendar" class="w-6 h-6"></i>
+                </div>
+                <div class="text-3xl md:text-4xl font-display font-black text-indigo-700 mb-1">
+                    <span class="stat-number" data-target="20">0</span>+
+                </div>
+                <div class="text-gray-600 font-semibold text-sm">Years of Excellence</div>
+            </div>
+
+            <div class="stat-card bg-gradient-to-br from-blue-50 to-cyan-100 rounded-2xl p-6 text-center border border-blue-200 reveal">
+                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-blue-600 shadow mx-auto mb-3">
+                    <i data-lucide="award" class="w-6 h-6"></i>
+                </div>
+                <div class="text-3xl md:text-4xl font-display font-black text-blue-700 mb-1">
+                    <span class="stat-number" data-target="95">0</span>%
+                </div>
+                <div class="text-gray-600 font-semibold text-sm">Pass Rate</div>
+            </div>
+
+            <div class="stat-card bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl p-6 text-center border border-green-200 reveal">
+                <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-green-600 shadow mx-auto mb-3">
+                    <i data-lucide="book-open" class="w-6 h-6"></i>
+                </div>
+                <div class="text-3xl md:text-4xl font-display font-black text-green-700 mb-1">
+                    <span class="stat-number" data-target="12">0</span>
+                </div>
+                <div class="text-gray-600 font-semibold text-sm">Classes (1–12)</div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     GALLERY 1 — AUTO-SCROLLING MARQUEE
+============================================================ -->
+<section class="py-10 bg-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 text-center reveal">
+        <span class="inline-block text-xs font-display font-bold tracking-widest text-blue-500 uppercase mb-2">Our Campus &amp; Moments</span>
+        <h2 class="text-2xl md:text-3xl font-display font-bold text-blue-950">A Glimpse Into Our World</h2>
+    </div>
+    <div class="marquee-wrapper">
+        <div class="marquee-track">
+            <img src="file_00000000878c7208a07d5ec2ede5478a.png" alt="School campus"  onerror="this.src='https://placehold.co/380x220/dbeafe/1e40af?text=Campus'">
+            <img src="IMG-20260504-WA0003.jpg" alt="Classroom"      onerror="this.src='https://placehold.co/340x220/bfdbfe/1d4ed8?text=Classroom'">
+            <img src="IMG-20260504-WA0006.jpg" alt="Students"       onerror="this.src='https://placehold.co/400x220/eff6ff/2563eb?text=Students'">
+            <img src="IMG-20260504-WA0021.jpg" alt="Lab session"    onerror="this.src='https://placehold.co/360x220/dbeafe/1e40af?text=Lab'">
+            <img src="IMG-20260504-WA0025.jpg" alt="Sports day"     onerror="this.src='https://placehold.co/320x220/bfdbfe/1d4ed8?text=Sports'">
+            <img src="unnamed.jpg"             alt="Annual day"     onerror="this.src='https://placehold.co/380x220/eff6ff/2563eb?text=Annual+Day'">
+            <img src="IMG-20260504-WA0019.jpg" alt="Teachers"       onerror="this.src='https://placehold.co/350x220/dbeafe/1e40af?text=Teachers'">
+            <img src="2024-03-17.jpg"          alt="Library"        onerror="this.src='https://placehold.co/400x220/bfdbfe/1d4ed8?text=Library'">
+            <img src="IMG-20260504-WA0012.jpg" alt="Prize ceremony" onerror="this.src='https://placehold.co/330x220/eff6ff/2563eb?text=Prize'">
+            <img src=""                        alt="School building"onerror="this.src='https://placehold.co/370x220/dbeafe/1e40af?text=Building'">
+            <!-- Duplicates for seamless loop -->
+            <img src="file_00000000878c7208a07d5ec2ede5478a.png" alt="School campus"  onerror="this.src='https://placehold.co/380x220/dbeafe/1e40af?text=Campus'">
+            <img src="IMG-20260504-WA0003.jpg" alt="Classroom"      onerror="this.src='https://placehold.co/340x220/bfdbfe/1d4ed8?text=Classroom'">
+            <img src="IMG-20260504-WA0006.jpg" alt="Students"       onerror="this.src='https://placehold.co/400x220/eff6ff/2563eb?text=Students'">
+            <img src="IMG-20260504-WA0021.jpg" alt="Lab session"    onerror="this.src='https://placehold.co/360x220/dbeafe/1e40af?text=Lab'">
+            <img src="IMG-20260504-WA0025.jpg" alt="Sports day"     onerror="this.src='https://placehold.co/320x220/bfdbfe/1d4ed8?text=Sports'">
+            <img src="unnamed.jpg"             alt="Annual day"     onerror="this.src='https://placehold.co/380x220/eff6ff/2563eb?text=Annual+Day'">
+            <img src="IMG-20260504-WA0019.jpg" alt="Teachers"       onerror="this.src='https://placehold.co/350x220/dbeafe/1e40af?text=Teachers'">
+            <img src="2024-03-17.jpg"          alt="Library"        onerror="this.src='https://placehold.co/400x220/bfdbfe/1d4ed8?text=Library'">
+            <img src="IMG-20260504-WA0012.jpg" alt="Prize ceremony" onerror="this.src='https://placehold.co/330x220/eff6ff/2563eb?text=Prize'">
+            <img src=""                        alt="School building"onerror="this.src='https://placehold.co/370x220/dbeafe/1e40af?text=Building'">
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     ABOUT SECTION
+============================================================ -->
+<section id="about" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1 relative reveal reveal-left">
+                <img src="file_00000000878c7208a07d5ec2ede5478a.png"
+                     alt="Chetana Shiksha Niketan" class="rounded-2xl shadow-2xl object-cover w-full h-auto"
+                     onerror="this.onerror=null; this.src='https://placehold.co/800x400/eff6ff/1d4ed8?text=Chetana+Shiksha+Niketan';">
+                <div class="absolute -bottom-6 -right-6 bg-gradient-to-br from-blue-600 to-blue-800 text-white p-6 rounded-2xl shadow-xl hidden sm:block">
+                    <div class="text-4xl font-display font-black mb-1">20+</div>
+                    <div class="text-blue-100 text-sm font-semibold">Years of Academic<br>Excellence</div>
+                </div>
+            </div>
+            <div class="order-1 md:order-2 reveal reveal-right">
+                <h2 class="text-3xl font-display font-bold text-blue-950 mb-2">About Our Institution</h2>
+                <div class="w-20 h-1 bg-blue-600 rounded mb-6"></div>
+                <p class="text-gray-600 mb-6 leading-relaxed">
+                    Established in 2006, <strong>Chetana Shiksha Niketan</strong> has been a beacon of quality education in Jibanti, Kandi, Murshidabad. We believe in nurturing young minds with not just academic knowledge, but holistic development.
+                </p>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    Our institution is committed to providing an inclusive learning environment. We take pride in our dedicated faculty and our special initiatives to support students from all socio-economic backgrounds.
+                </p>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                            <i data-lucide="map-pin" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-display font-semibold text-gray-900">Prime Location</h4>
+                            <a href="https://maps.app.goo.gl/XMiZSiX9fGkDnFsz6" target="_blank" rel="noopener noreferrer" class="text-sm text-blue-600 hover:text-blue-800 flex items-center mt-0.5 transition-colors">
+                                Jibanti, Murshidabad <i data-lucide="external-link" class="w-3 h-3 ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="bg-blue-100 p-2 rounded-lg text-blue-600">
+                            <i data-lucide="award" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-display font-semibold text-gray-900">Quality Assured</h4>
+                            <p class="text-sm text-gray-500">Experienced Faculty</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     ACADEMICS SECTION
+============================================================ -->
+<section id="academics" class="py-20 bg-blue-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+            <h2 class="text-3xl font-display font-bold text-blue-950 mb-2">Our Academic Programs</h2>
+            <div class="w-20 h-1 bg-blue-600 rounded mx-auto mb-6"></div>
+            <p class="text-gray-600 text-lg">Comprehensive learning paths designed for success at every stage of a student's journey.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-group">
+            <!-- Card 1 -->
+            <div tabindex="0" class="interactive-card bg-white rounded-2xl p-8 shadow-sm group reveal">
+                <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="book-open" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-xl font-display font-bold text-gray-900 mb-3">School Education</h3>
+                <p class="text-gray-600 mb-4">Quality education for all subjects from Class 1 to 12. We ensure a strong foundation adhering to the latest syllabus and pedagogy.</p>
+                <ul class="text-sm text-gray-500 space-y-2">
+                    <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> All Core Subjects</li>
+                    <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> Board Exam Preparation</li>
+                </ul>
+            </div>
+            <!-- Card 2 -->
+            <div tabindex="0" class="interactive-card bg-white rounded-2xl p-8 shadow-sm group relative overflow-hidden reveal">
+                <div class="absolute top-0 right-0 bg-blue-600 text-white text-xs font-display font-bold px-3 py-1 rounded-bl-lg z-10">Popular</div>
+                <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6 group-hover:scale-110 transition-transform relative z-10">
+                    <i data-lucide="microscope" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-xl font-display font-bold text-gray-900 mb-3 relative z-10">Competitive Exams</h3>
+                <p class="text-gray-600 mb-4 relative z-10">Intensive coaching and preparation modules specifically designed for national level medical and engineering entrances.</p>
+                <ul class="text-sm text-gray-500 space-y-2 relative z-10">
+                    <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> NEET Preparation</li>
+                    <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> JEE Preparation</li>
+                </ul>
+            </div>
+            <!-- Card 3 -->
+            <div tabindex="0" class="interactive-card bg-white rounded-2xl p-8 shadow-sm group reveal">
+                <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="graduation-cap" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-xl font-display font-bold text-gray-900 mb-3">Mission Admissions</h3>
+                <p class="text-gray-600 mb-4">Specialized rigorous preparation for students aiming to secure admissions in prestigious residential missions and schools.</p>
+                <ul class="text-sm text-gray-500 space-y-2">
+                    <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> Ramakrishna Mission prep</li>
+                    <li class="flex items-center"><i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i> Mock Tests &amp; Interviews</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     ★ STUDENT PORTAL MODAL OVERLAY ★
+============================================================ -->
+<div id="portal-modal-overlay" onclick="closePortalModal(event)">
+  <div id="portal-modal-box">
+    <button id="portal-close-btn" onclick="closePortalOnBtn()" title="Close Portal">✕</button>
+
+<!-- ============================================================
+     ★ STUDENT PORTAL SECTION ★
+============================================================ -->
+<section id="portal" class="py-20 relative overflow-hidden" style="background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1d4ed8 100%);">
+    <!-- Decorative circles -->
+    <div class="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10" style="background: radial-gradient(circle, #60a5fa, transparent); transform: translate(30%, -30%);"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 rounded-full opacity-10" style="background: radial-gradient(circle, #818cf8, transparent); transform: translate(-30%, 30%);"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        <!-- Heading -->
+        <div class="text-center mb-12 reveal">
+            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-5 py-2 rounded-full border border-white/20 mb-5">
+                <i data-lucide="graduation-cap" class="w-5 h-5 text-blue-300"></i>
+                <span class="text-blue-200 text-sm font-display font-semibold tracking-wide">STUDENT PORTAL</span>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-display font-black text-white mb-3">Your School, Your Info</h2>
+            <p class="text-blue-200 text-lg max-w-xl mx-auto">Check your class routine, monthly fees, and personal information — all in one place.</p>
+        </div>
+
+        <!-- TAB BUTTONS -->
+        <div class="flex flex-wrap justify-center gap-3 mb-8 reveal">
+            <button onclick="switchPortalTab('routine')" id="tab-routine"
+                    class="portal-tab-btn active px-6 py-3 rounded-xl text-sm flex items-center gap-2 bg-white/10 text-white border border-white/20">
+                <i data-lucide="calendar-days" class="w-4 h-4"></i> Class Routine
+            </button>
+            <button onclick="switchPortalTab('fees')" id="tab-fees"
+                    class="portal-tab-btn px-6 py-3 rounded-xl text-sm flex items-center gap-2 bg-white/10 text-white border border-white/20">
+                <i data-lucide="indian-rupee" class="w-4 h-4"></i> Monthly Fees
+            </button>
+            <button onclick="switchPortalTab('search')" id="tab-search"
+                    class="portal-tab-btn px-6 py-3 rounded-xl text-sm flex items-center gap-2 bg-white/10 text-white border border-white/20">
+                <i data-lucide="search" class="w-4 h-4"></i> Student Search
+            </button>
+        </div>
+
+        <!-- PORTAL CARD WRAPPER -->
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden reveal" style="box-shadow: 0 30px 80px rgba(0,0,0,0.4);">
+
+            <!-- ── TAB: CLASS ROUTINE ── -->
+            <div id="panel-routine" class="portal-panel active p-6 md:p-8">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <div>
+                        <h3 class="text-xl font-display font-bold text-blue-950">Class Routine / Timetable</h3>
+                        <p class="text-gray-500 text-sm mt-1">Select your class to view the weekly schedule</p>
+                    </div>
+                    <select id="classSelect" onchange="renderRoutine()"
+                            class="portal-input border-2 border-blue-200 rounded-xl px-4 py-3 text-blue-900 font-display font-semibold bg-blue-50 transition-all">
+                        <option value="">— Choose Class —</option>
+                        <option value="1">Class 1</option>
+                        <option value="2">Class 2</option>
+                        <option value="3">Class 3</option>
+                        <option value="4">Class 4</option>
+                        <option value="5">Class 5</option>
+                        <option value="6">Class 6</option>
+                        <option value="7">Class 7</option>
+                        <option value="8">Class 8</option>
+                        <option value="9">Class 9</option>
+                        <option value="10">Class 10</option>
+                        <option value="11">Class 11 (Science)</option>
+                        <option value="12">Class 12 (Science)</option>
+                    </select>
+                </div>
+
+                <!-- Placeholder -->
+                <div id="routine-placeholder" class="text-center py-14 text-gray-400">
+                    <i data-lucide="calendar-days" class="w-16 h-16 mx-auto mb-3 text-blue-200"></i>
+                    <p class="font-display font-semibold text-lg">Select a class above to view the timetable</p>
+                </div>
+
+                <!-- Timetable Output -->
+                <div id="routine-output" class="hidden">
+                    <div class="overflow-x-auto">
+                        <div id="timetable-grid" class="timetable-grid min-w-[560px]">
+                            <!-- Rendered by JS -->
+                        </div>
+                    </div>
+                    <div class="mt-5 flex flex-wrap gap-3 text-xs">
+                        <span class="flex items-center gap-1.5 bg-yellow-100 text-yellow-800 px-3 py-1.5 rounded-full font-semibold">
+                            <span class="w-3 h-3 rounded bg-yellow-300 inline-block"></span> Short Break (15 min)
+                        </span>
+                        <span class="flex items-center gap-1.5 bg-green-100 text-green-800 px-3 py-1.5 rounded-full font-semibold">
+                            <span class="w-3 h-3 rounded bg-green-300 inline-block"></span> Lunch Break (30 min)
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── TAB: MONTHLY FEES ── -->
+            <div id="panel-fees" class="portal-panel p-6 md:p-8">
+                <div class="mb-6">
+                    <h3 class="text-xl font-display font-bold text-blue-950">Monthly Fees Details</h3>
+                    <p class="text-gray-500 text-sm mt-1">Enter your Roll Number to view fees status</p>
+                </div>
+                <!-- Search bar -->
+                <div class="flex gap-3 mb-6">
+                    <div class="relative flex-1">
+                        <i data-lucide="hash" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"></i>
+                        <input type="text" id="feesRollInput" placeholder="Enter Roll Number (e.g. 101)"
+                               class="portal-input w-full pl-10 pr-4 py-3 border-2 border-blue-200 rounded-xl bg-blue-50 font-semibold text-blue-900 transition-all"
+                               onkeydown="if(event.key==='Enter') searchFees()">
+                    </div>
+                    <button onclick="searchFees()"
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-display font-semibold transition-all shadow-md hover:shadow-blue-300 btn-ripple">
+                        Search
+                    </button>
+                </div>
+
+                <!-- Fees Placeholder -->
+                <div id="fees-placeholder" class="text-center py-12 text-gray-400">
+                    <i data-lucide="indian-rupee" class="w-16 h-16 mx-auto mb-3 text-blue-200"></i>
+                    <p class="font-display font-semibold text-lg">Enter roll number and press Search</p>
+                    <p class="text-sm mt-1">Demo roll numbers: 101, 102, 103, 104, 105</p>
+                </div>
+
+                <!-- Fees Result -->
+                <div id="fees-result" class="hidden"></div>
+            </div>
+
+            <!-- ── TAB: STUDENT SEARCH ── -->
+            <div id="panel-search" class="portal-panel p-6 md:p-8">
+                <div class="mb-6">
+                    <h3 class="text-xl font-display font-bold text-blue-950">Student Information Search</h3>
+                    <p class="text-gray-500 text-sm mt-1">Search by student name or roll number</p>
+                </div>
+                <!-- Search bar -->
+                <div class="flex gap-3 mb-6">
+                    <div class="relative flex-1">
+                        <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5"></i>
+                        <input type="text" id="studentSearchInput" placeholder="Type name or roll no..."
+                               class="portal-input w-full pl-10 pr-4 py-3 border-2 border-blue-200 rounded-xl bg-blue-50 font-semibold text-blue-900 transition-all"
+                               oninput="liveStudentSearch(this.value)">
+                    </div>
+                </div>
+
+                <!-- Search Placeholder -->
+                <div id="search-placeholder" class="text-center py-12 text-gray-400">
+                    <i data-lucide="users" class="w-16 h-16 mx-auto mb-3 text-blue-200"></i>
+                    <p class="font-display font-semibold text-lg">Start typing to search students</p>
+                    <p class="text-sm mt-1">Demo: Try "Rahul", "Priya", or roll number "103"</p>
+                </div>
+
+                <!-- Search Results -->
+                <div id="search-results" class="hidden space-y-4"></div>
+            </div>
+
+        </div><!-- end portal card -->
+
+        <!-- Disclaimer -->
+        <p class="text-center text-blue-300/70 text-xs mt-6 font-semibold">
+            🔒 This portal displays demo data. Actual data will be managed by the school administration.
+        </p>
+
+    </div>
+</section>
+  </div><!-- end #portal-modal-box -->
+</div><!-- end #portal-modal-overlay -->
+
+<!-- ============================================================
+     TEACHING METHODOLOGY SECTION (NEW)
+============================================================ -->
+<section class="py-20 bg-gradient-to-br from-blue-950 to-blue-800 text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#93c5fd 1px, transparent 1px); background-size: 28px 28px;"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-14 reveal">
+            <span class="inline-block text-xs font-display font-bold tracking-widest text-blue-300 uppercase mb-3">Our Approach</span>
+            <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-3">How We Teach Differently</h2>
+            <div class="w-20 h-1 bg-blue-400 rounded mx-auto mb-5"></div>
+            <p class="text-blue-200 text-lg max-w-2xl mx-auto">At Chetana Shiksha Niketan, we don't just teach — we inspire. Our methodology is built on decades of experience and a deep understanding of how students learn best.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-group">
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-7 reveal hover:bg-white/15 transition-all">
+                <div class="w-14 h-14 bg-blue-500/30 rounded-xl flex items-center justify-center text-blue-200 mb-5 text-3xl">🧠</div>
+                <h3 class="font-display font-bold text-white text-xl mb-3">Concept-First Learning</h3>
+                <p class="text-blue-200 text-sm leading-relaxed">We focus on building deep conceptual clarity before moving to practice. Students who understand the "why" consistently outperform rote learners in board exams and competitive tests.</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-7 reveal hover:bg-white/15 transition-all">
+                <div class="w-14 h-14 bg-blue-500/30 rounded-xl flex items-center justify-center text-blue-200 mb-5 text-3xl">📊</div>
+                <h3 class="font-display font-bold text-white text-xl mb-3">Progress Tracking</h3>
+                <p class="text-blue-200 text-sm leading-relaxed">Monthly unit tests, weekly class tests, and parent feedback meetings ensure that no student falls behind. We identify weak points early and address them personally with targeted sessions.</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-7 reveal hover:bg-white/15 transition-all">
+                <div class="w-14 h-14 bg-blue-500/30 rounded-xl flex items-center justify-center text-blue-200 mb-5 text-3xl">🎯</div>
+                <h3 class="font-display font-bold text-white text-xl mb-3">Goal-Oriented Coaching</h3>
+                <p class="text-blue-200 text-sm leading-relaxed">From Class 8 onwards, students receive dedicated career counselling and exam-specific coaching tracks — whether they aim for Madhyamik, HS, NEET, JEE, or Mission Admission entrances.</p>
+            </div>
+        </div>
+        <!-- Extra row -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 reveal-group">
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-7 flex gap-5 items-start reveal hover:bg-white/15 transition-all">
+                <div class="text-4xl flex-shrink-0">📚</div>
+                <div>
+                    <h3 class="font-display font-bold text-white text-lg mb-2">Bilingual Teaching</h3>
+                    <p class="text-blue-200 text-sm leading-relaxed">All subjects are taught in a bilingual format — Bengali and English — so that students from all backgrounds can grasp complex topics without a language barrier. English communication is also taught as a life skill from Class 1.</p>
+                </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-7 flex gap-5 items-start reveal hover:bg-white/15 transition-all">
+                <div class="text-4xl flex-shrink-0">🤝</div>
+                <div>
+                    <h3 class="font-display font-bold text-white text-lg mb-2">Small Batch Sizes</h3>
+                    <p class="text-blue-200 text-sm leading-relaxed">We deliberately keep batch sizes small so every student gets personal attention. Our teachers know each child by name and learning style, enabling them to tailor explanations to individual needs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     OUR FACULTY SECTION (NEW)
+============================================================ -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14 reveal">
+            <span class="inline-block text-xs font-display font-bold tracking-widest text-blue-500 uppercase mb-3">Meet the Team</span>
+            <h2 class="text-3xl font-display font-bold text-blue-950 mb-2">Our Dedicated Faculty</h2>
+            <div class="w-20 h-1 bg-blue-600 rounded mx-auto mb-5"></div>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto">Our teachers are not just educators — they are mentors, motivators, and role models who guide students beyond the classroom.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 reveal-group">
+            <div class="bg-blue-50 rounded-2xl p-6 text-center border border-blue-100 hover:shadow-lg hover:-translate-y-1 transition-all reveal">
+                <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center text-white text-3xl font-display font-black mx-auto mb-4">P</div>
+                <h4 class="font-display font-bold text-gray-900 text-lg">Parimal Kr. Mondal</h4>
+                <p class="text-blue-600 font-semibold text-sm mb-2">Founder & Director</p>
+                <p class="text-gray-500 text-xs leading-relaxed">Mathematics & Science expert with 20+ years experience. The driving force behind Chetana's vision of accessible quality education.</p>
+            </div>
+            <div class="bg-blue-50 rounded-2xl p-6 text-center border border-blue-100 hover:shadow-lg hover:-translate-y-1 transition-all reveal">
+                <div class="w-20 h-20 bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-full flex items-center justify-center text-white text-3xl font-display font-black mx-auto mb-4">S</div>
+                <h4 class="font-display font-bold text-gray-900 text-lg">Senior Faculty</h4>
+                <p class="text-blue-600 font-semibold text-sm mb-2">English & Literature</p>
+                <p class="text-gray-500 text-xs leading-relaxed">Specialises in English grammar, essay writing, and spoken communication skills for board examinations and competitive tests.</p>
+            </div>
+            <div class="bg-blue-50 rounded-2xl p-6 text-center border border-blue-100 hover:shadow-lg hover:-translate-y-1 transition-all reveal">
+                <div class="w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-full flex items-center justify-center text-white text-3xl font-display font-black mx-auto mb-4">R</div>
+                <h4 class="font-display font-bold text-gray-900 text-lg">Science Faculty</h4>
+                <p class="text-blue-600 font-semibold text-sm mb-2">Physics, Chemistry & Biology</p>
+                <p class="text-gray-500 text-xs leading-relaxed">Leads our NEET & JEE coaching track with a strong record of students qualifying for top medical and engineering colleges.</p>
+            </div>
+            <div class="bg-blue-50 rounded-2xl p-6 text-center border border-blue-100 hover:shadow-lg hover:-translate-y-1 transition-all reveal">
+                <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-700 rounded-full flex items-center justify-center text-white text-3xl font-display font-black mx-auto mb-4">A</div>
+                <h4 class="font-display font-bold text-gray-900 text-lg">Arts & GK Faculty</h4>
+                <p class="text-blue-600 font-semibold text-sm mb-2">Co-Curriculars & GK</p>
+                <p class="text-gray-500 text-xs leading-relaxed">Runs our arts, drawing, recitation, and general knowledge program — developing well-rounded students ready for any competitive arena.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     STUDENT TESTIMONIALS SECTION (NEW)
+============================================================ -->
+<section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-72 h-72 rounded-full opacity-20" style="background: radial-gradient(circle, #93c5fd, transparent); transform: translate(30%, -30%);"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-14 reveal">
+            <span class="inline-block text-xs font-display font-bold tracking-widest text-blue-500 uppercase mb-3">Voices of Success</span>
+            <h2 class="text-3xl font-display font-bold text-blue-950 mb-2">What Our Students & Parents Say</h2>
+            <div class="w-20 h-1 bg-blue-600 rounded mx-auto"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-group">
+            <div class="bg-white rounded-2xl p-7 shadow-sm border border-blue-100 hover:shadow-lg transition-all reveal">
+                <div class="flex text-yellow-400 text-xl mb-4">★★★★★</div>
+                <p class="text-gray-600 text-sm leading-relaxed mb-5">"My son went from failing Math to scoring 92 in his Madhyamik board exam. The teachers here genuinely care about every child. Chetana Shiksha Niketan changed our family's life."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-display font-bold">R</div>
+                    <div><p class="font-display font-semibold text-gray-900 text-sm">Ratan Das</p><p class="text-gray-400 text-xs">Parent, Class 10</p></div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-7 shadow-sm border border-blue-100 hover:shadow-lg transition-all reveal">
+                <div class="flex text-yellow-400 text-xl mb-4">★★★★★</div>
+                <p class="text-gray-600 text-sm leading-relaxed mb-5">"I cleared the Ramakrishna Mission entrance on my first attempt. The Mission Admission batch here is intense but incredibly effective. Sir explains every concept with real-world examples."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 font-display font-bold">A</div>
+                    <div><p class="font-display font-semibold text-gray-900 text-sm">Arnab Sarkar</p><p class="text-gray-400 text-xs">Student, Class 8 Batch 2024</p></div>
+                </div>
+            </div>
+            <div class="bg-white rounded-2xl p-7 shadow-sm border border-blue-100 hover:shadow-lg transition-all reveal">
+                <div class="flex text-yellow-400 text-xl mb-4">★★★★★</div>
+                <p class="text-gray-600 text-sm leading-relaxed mb-5">"As a single mother from a small village, I was worried about quality coaching for my daughter. Chetana's fees are affordable and the scholarship support made it truly accessible. She's now aspiring for NEET."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-display font-bold">S</div>
+                    <div><p class="font-display font-semibold text-gray-900 text-sm">Sabina Khatun</p><p class="text-gray-400 text-xs">Parent, Class 11 Science</p></div>
+                </div>
+            </div>
+        </div>
+        <!-- Achievement banner -->
+        <div class="mt-14 bg-gradient-to-r from-blue-700 to-blue-900 rounded-2xl p-8 text-white text-center reveal shadow-xl">
+            <h3 class="font-display font-bold text-2xl mb-3">🏆 Our Students' Recent Achievements</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6 text-center">
+                <div class="bg-white/10 rounded-xl p-5 border border-white/20">
+                    <div class="text-4xl font-display font-black text-yellow-300 mb-1">12+</div>
+                    <div class="text-blue-200 text-sm font-semibold">Students in Ramakrishna Mission & Navodaya (2024–25)</div>
+                </div>
+                <div class="bg-white/10 rounded-xl p-5 border border-white/20">
+                    <div class="text-4xl font-display font-black text-green-300 mb-1">95%</div>
+                    <div class="text-blue-200 text-sm font-semibold">Madhyamik & HS Pass Rate (Board 2025)</div>
+                </div>
+                <div class="bg-white/10 rounded-xl p-5 border border-white/20">
+                    <div class="text-4xl font-display font-black text-blue-200 mb-1">3</div>
+                    <div class="text-blue-200 text-sm font-semibold">District Level Competition Winners (2024–25)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     KEY FEATURES SECTION
+============================================================ -->
+<section id="features" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+            <div class="max-w-2xl reveal">
+                <h2 class="text-3xl font-display font-bold text-blue-950 mb-2">Why Choose Us?</h2>
+                <div class="w-20 h-1 bg-blue-600 rounded mb-6"></div>
+                <p class="text-gray-600 text-lg">We provide an ecosystem that fosters growth, assesses progress, and ensures inclusivity.</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal-group">
+            <div class="bg-blue-50/50 p-6 rounded-xl border border-blue-100 hover:bg-blue-50 transition-colors reveal">
+                <div class="bg-white w-12 h-12 rounded-full flex items-center justify-center text-blue-600 shadow-sm mb-4">
+                    <i data-lucide="languages" class="w-6 h-6"></i>
+                </div>
+                <h4 class="text-lg font-display font-bold text-gray-900 mb-2">Special Subject Focus</h4>
+                <p class="text-gray-600 text-sm">Enhanced emphasis on English, Mathematics, and General Knowledge to build a robust academic core.</p>
+            </div>
+            <div class="bg-blue-50/50 p-6 rounded-xl border border-blue-100 hover:bg-blue-50 transition-colors reveal">
+                <div class="bg-white w-12 h-12 rounded-full flex items-center justify-center text-blue-600 shadow-sm mb-4">
+                    <i data-lucide="file-check-2" class="w-6 h-6"></i>
+                </div>
+                <h4 class="text-lg font-display font-bold text-gray-900 mb-2">Monthly Assessments</h4>
+                <p class="text-gray-600 text-sm">Regular monthly tests to closely track student progress, identify weaknesses, and adapt teaching methods.</p>
+            </div>
+            <div class="bg-blue-50/50 p-6 rounded-xl border border-blue-100 hover:bg-blue-50 transition-colors reveal">
+                <div class="bg-white w-12 h-12 rounded-full flex items-center justify-center text-blue-600 shadow-sm mb-4">
+                    <i data-lucide="palette" class="w-6 h-6"></i>
+                </div>
+                <h4 class="text-lg font-display font-bold text-gray-900 mb-2">Arts &amp; Recitation</h4>
+                <p class="text-gray-600 text-sm">Dedicated co-curricular classes for arts, drawing, and recitation to nurture creativity and confidence.</p>
+            </div>
+            <div class="bg-blue-50/50 p-6 rounded-xl border border-blue-100 hover:bg-blue-50 transition-colors relative overflow-hidden reveal">
+                <div class="absolute right-0 top-0 w-16 h-16 bg-blue-100 rounded-bl-full -z-10"></div>
+                <div class="bg-white w-12 h-12 rounded-full flex items-center justify-center text-blue-600 shadow-sm mb-4">
+                    <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                </div>
+                <h4 class="text-lg font-display font-bold text-gray-900 mb-2">Support for Needy</h4>
+                <p class="text-gray-600 text-sm">We offer special discounts and financial support for meritorious but economically disadvantaged students.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     GALLERY 2 — ASYMMETRICAL SHAPE DESIGN
+============================================================ -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-10 reveal">
+            <span class="inline-block text-xs font-display font-bold tracking-widest text-blue-500 uppercase mb-2">Photo Gallery</span>
+            <h2 class="text-3xl font-display font-bold text-blue-950 mb-2">Life at Chetana Shiksha Niketan</h2>
+            <div class="w-20 h-1 bg-blue-600 rounded mx-auto mt-3"></div>
+            <p class="text-gray-500 mt-4 text-base">Moments of learning, friendship, and achievement — captured for life.</p>
+        </div>
+        <div class="photo-grid reveal">
+            <div class="photo-grid-item"><img src="IMG-20260504-WA0003.jpg" alt="competition session" onerror="this.src='https://placehold.co/600x400/dbeafe/1e40af?text=Gallery+1'"><div class="photo-overlay"><span>Competition Session</span></div></div>
+            <div class="photo-grid-item"><img src="IMG-20260504-WA0005.jpg" alt="competition session" onerror="this.src='https://placehold.co/600x400/bfdbfe/1d4ed8?text=Gallery+2'"><div class="photo-overlay"><span>Competition Session</span></div></div>
+            <div class="photo-grid-item"><img src="IMG-20260504-WA0012.jpg" alt="Class room" onerror="this.src='https://placehold.co/600x400/eff6ff/2563eb?text=Gallery+3'"><div class="photo-overlay"><span>Class Room</span></div></div>
+            <div class="photo-grid-item"><img src="IMG-20260504-WA0025.jpg" alt="Teachers day" onerror="this.src='https://placehold.co/600x400/dbeafe/1e40af?text=Gallery+4'"><div class="photo-overlay"><span>Teachers Day</span></div></div>
+            <div class="photo-grid-item"><img src="IMG-20260504-WA0006.jpg" alt="Prize distribution" onerror="this.src='https://placehold.co/600x400/bfdbfe/1d4ed8?text=Gallery+5'"><div class="photo-overlay"><span>Prize Distribution</span></div></div>
+            <div class="photo-grid-item"><img src="gallery6.jpg" alt="Annual function" onerror="this.src='https://placehold.co/600x400/eff6ff/2563eb?text=Gallery+6'"><div class="photo-overlay"><span>Annual Function</span></div></div>
+            <div class="photo-grid-item"><img src="gallery7.jpg" alt="Art class" onerror="this.src='https://placehold.co/600x400/dbeafe/1e40af?text=Gallery+7'"><div class="photo-overlay"><span>Art Class</span></div></div>
+            <div class="photo-grid-item"><img src="gallery8.jpg" alt="Library" onerror="this.src='https://placehold.co/600x400/bfdbfe/1d4ed8?text=Gallery+8'"><div class="photo-overlay"><span>Library</span></div></div>
+            <div class="photo-grid-item"><img src="gallery9.jpg" alt="Morning assembly" onerror="this.src='https://placehold.co/600x400/eff6ff/2563eb?text=Gallery+9'"><div class="photo-overlay"><span>Morning Assembly</span></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     GET HELP SECTION
+============================================================ -->
+<section class="py-20 bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12 reveal">
+            <h2 class="text-3xl font-display font-bold text-blue-950 mb-2">Ready to Shape a Brilliant Future?</h2>
+            <div class="w-20 h-1 bg-blue-600 rounded mx-auto mb-4"></div>
+            <p class="text-gray-600 text-lg">Fill in your details below and we'll reach out to you on WhatsApp.</p>
+        </div>
+        <div class="flex justify-center reveal">
+            <div id="get-help-card" class="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden">
+                <div class="bg-[#2563eb] p-8 text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white opacity-10"></div>
+                    <div class="absolute bottom-0 left-0 -ml-8 -mb-8 w-24 h-24 rounded-full bg-white opacity-10"></div>
+                    <h3 class="text-2xl md:text-3xl font-display font-bold text-white mb-2 leading-tight relative z-10">GET HELP</h3>
+                    <p class="text-blue-100 text-sm md:text-base mt-3 relative z-10 font-semibold">
+                        Join Chetana Shiksha Niketan today and experience education that makes a difference.
+                    </p>
+                </div>
+                <div class="p-6 md:p-8">
+                    <form id="whatsappForm" onsubmit="sendToWhatsApp(event)">
+                        <div class="mb-5">
+                            <label for="name" class="block text-gray-700 text-sm font-display font-bold mb-2">Full Name</label>
+                            <div class="relative input-group">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-user text-gray-400 transition-colors duration-200"></i>
+                                </div>
+                                <input type="text" id="name" required placeholder="Your Full Name"
+                                       class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-transparent transition-all duration-200 text-gray-800">
+                            </div>
+                        </div>
+                        <div class="mb-5">
+                            <label for="email" class="block text-gray-700 text-sm font-display font-bold mb-2">Email Address</label>
+                            <div class="relative input-group">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i id="emailIcon" class="fas fa-envelope text-gray-400 transition-colors duration-200"></i>
+                                </div>
+                                <input type="email" id="email" required placeholder="john@example.com"
+                                       class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-transparent transition-all duration-200 text-gray-800">
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <div class="flex justify-between items-end mb-2">
+                                <label for="message" class="block text-gray-700 text-sm font-display font-bold">Your Message <span class="text-gray-400 font-normal">(Optional)</span></label>
+                                <span id="charCount" class="text-xs text-gray-400">0 characters</span>
+                            </div>
+                            <div class="relative input-group">
+                                <div class="absolute top-3 left-3 pointer-events-none">
+                                    <i class="fas fa-comment-alt text-gray-400 transition-colors duration-200"></i>
+                                </div>
+                                <textarea id="message" rows="3" placeholder="Any specific queries?"
+                                          class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-transparent transition-all duration-200 text-gray-800 resize-none"></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" id="submitBtn"
+                                class="w-full bg-[#2563eb] hover:bg-blue-700 text-white font-display font-bold py-3.5 px-4 rounded-xl flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-blue-500/50 active:transform active:scale-95 group btn-ripple">
+                            <i id="btnIcon" class="fab fa-whatsapp mr-2 text-xl group-hover:scale-110 transition-transform duration-200"></i>
+                            <span id="btnText">Send a Message</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer id="contact" class="bg-blue-950 text-white pt-20 pb-10 border-t-4 border-blue-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+            <!-- Brand -->
+            <div class="lg:col-span-1 space-y-4 reveal">
+                <div class="flex items-center space-x-3 bg-white/5 p-3 rounded-xl inline-block mb-2">
+                    <div class="bg-white p-1 rounded-md inline-block">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10">
+                            <path d="M 85,25 A 45,45 0 1,0 85,75 L 68,60 A 22,22 0 1,1 68,40 Z" fill="#2563eb"/>
+                            <text x="30" y="62" font-family="Arial" font-weight="900" font-size="34" fill="#2563eb">S</text>
+                            <text x="54" y="62" font-family="Arial" font-weight="900" font-size="34" fill="#2563eb">N</text>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-display font-bold leading-tight">Chetana Shiksha<br>Niketan</h3>
+                </div>
+                <p class="text-blue-200 text-sm leading-relaxed">Providing quality education and empowering students since 2006. Excellence is our tradition.</p>
+                <div class="flex space-x-4 pt-2">
+                    <a href="https://www.facebook.com/share/17MatoY89k/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center text-white hover:bg-blue-600 hover:scale-110 transition-all shadow-md">
+                        <svg fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg>
+                    </a>
+                    <a href="https://wa.me/9378029299" target="_blank" rel="noopener noreferrer" class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center text-white hover:bg-green-500 hover:scale-110 transition-all shadow-md">
+                        <svg fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5"><path fill-rule="evenodd" d="M12.031 2c-5.523 0-10 4.477-10 10 0 1.745.449 3.393 1.251 4.836L2 22l5.303-1.245A9.957 9.957 0 0012.031 22c5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm0 18.324c-1.47 0-2.883-.374-4.108-1.083l-.294-.171-3.05.717.817-2.955-.188-.302c-.775-1.246-1.184-2.697-1.184-4.207 0-4.636 3.774-8.41 8.41-8.41 4.636 0 8.41 3.774 8.41 8.41 0 4.636-3.774 8.41-8.41 8.41z" clip-rule="evenodd"></path></svg>
+                    </a>
+                </div>
+            </div>
+            <!-- Quick Links -->
+            <div class="reveal">
+                <h4 class="text-lg font-display font-bold mb-6 text-white border-b border-blue-800 pb-2 inline-block">Quick Links</h4>
+                <ul class="space-y-3">
+                    <li><a href="#home"      class="text-blue-200 hover:text-white transition-colors flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i> Home</a></li>
+                    <li><a href="#about"     class="text-blue-200 hover:text-white transition-colors flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i> About Us</a></li>
+                    <li><a href="#academics" class="text-blue-200 hover:text-white transition-colors flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i> Academics</a></li>
+                    <li><a href="#" onclick="openPortalModal(event)"    class="text-blue-200 hover:text-white transition-colors flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i> Student Portal</a></li>
+                    <li><a href="#features"  class="text-blue-200 hover:text-white transition-colors flex items-center"><i data-lucide="chevron-right" class="w-4 h-4 mr-2"></i> Features</a></li>
+                </ul>
+            </div>
+            <!-- Contact Details -->
+            <div class="lg:col-span-2 reveal">
+                <h4 class="text-lg font-display font-bold mb-6 text-white border-b border-blue-800 pb-2 inline-block">Contact Information</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="mt-1 bg-blue-800/50 p-2 rounded text-blue-300"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+                            <div>
+                                <h5 class="font-display font-semibold text-white">Location</h5>
+                                <a href="https://maps.app.goo.gl/XMiZSiX9fGkDnFsz6" target="_blank" rel="noopener noreferrer" class="text-blue-200 text-sm mt-1 hover:text-white transition-colors block group">
+                                    Jibanti, Kandi<br>Murshidabad, West Bengal<br>Pin - 742136
+                                    <span class="flex items-center mt-2 text-blue-400 group-hover:text-blue-300 transition-colors font-semibold">
+                                        <i data-lucide="external-link" class="w-3.5 h-3.5 mr-1.5"></i> View on Map
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="mt-1 bg-blue-800/50 p-2 rounded text-blue-300"><i data-lucide="phone" class="w-5 h-5"></i></div>
+                            <div>
+                                <h5 class="font-display font-semibold text-white">Call Us</h5>
+                                <div class="flex flex-col mt-1 space-y-1 text-sm text-blue-200">
+                                    <a href="tel:+919378029299" class="hover:text-white transition-colors">+91 93780 29299</a>
+                                    <a href="tel:+919933468587" class="hover:text-white transition-colors">+91 99334 68587</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 pt-2">
+                            <div class="mt-1 bg-blue-800/50 p-2 rounded text-blue-300"><i data-lucide="mail" class="w-5 h-5"></i></div>
+                            <div>
+                                <h5 class="font-display font-semibold text-white">Email</h5>
+                                <a href="mailto:contact@chetanashikshaniketan.com" class="text-blue-200 text-sm mt-1 hover:text-white transition-colors break-all">contact@chetanashikshaniketan.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-blue-900 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-blue-400 space-y-3 md:space-y-0 text-center md:text-left">
+            <p>&copy; 2026 Chetana Shiksha Niketan. All rights reserved.</p>
+            <p class="font-display font-semibold text-blue-300">Made by Parimal (P.K BOSS)</p>
+            <p>Established 2006</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ============================================================
+     FLOATING WHATSAPP BUTTON
+============================================================ -->
+<a href="https://wa.me/919378029299" target="_blank" rel="noopener noreferrer" class="fab-whatsapp" title="Chat on WhatsApp">
+    <svg fill="white" viewBox="0 0 24 24" class="w-7 h-7">
+        <path d="M12.031 2c-5.523 0-10 4.477-10 10 0 1.745.449 3.393 1.251 4.836L2 22l5.303-1.245A9.957 9.957 0 0012.031 22c5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm4.61 13.698c-.253-.127-1.496-.739-1.728-.823-.231-.084-.401-.127-.569.127-.169.253-.652.823-.799.992-.148.169-.295.19-.548.063-.253-.127-1.067-.393-2.031-1.253-.749-.668-1.255-1.494-1.403-1.748-.148-.254-.016-.391.111-.518.114-.114.253-.295.379-.443.127-.148.169-.253.253-.422.084-.169.042-.317-.021-.443-.063-.127-.569-1.372-.779-1.879-.205-.494-.413-.428-.569-.436-.148-.008-.317-.008-.485-.008s-.443.063-.675.317c-.232.254-.886.866-.886 2.11 0 1.244.907 2.449 1.034 2.618.127.169 1.785 2.726 4.324 3.822 2.539 1.096 2.539.739 3.003.697.464-.042 1.496-.612 1.707-1.203.211-.591.211-1.097.148-1.203z"/>
+    </svg>
+</a>
+
+<!-- Scroll to Top -->
+<button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+    <i data-lucide="chevron-up" class="w-5 h-5"></i>
+</button>
+
+<!-- ============================================================
+     SCRIPTS
+============================================================ -->
+<script>
+// ── PORTAL MODAL ──────────────────────────────────────────────
+function openPortalModal(e) {
+    if (e) e.preventDefault();
+    const overlay = document.getElementById('portal-modal-overlay');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // close mobile menu if open
+    document.getElementById('mobile-menu').classList.add('hidden');
+}
+function closePortalOnBtn() {
+    const overlay = document.getElementById('portal-modal-overlay');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+}
+function closePortalModal(e) {
+    // close only if clicking the backdrop (not the modal box)
+    if (e.target === document.getElementById('portal-modal-overlay')) {
+        closePortalOnBtn();
+    }
+}
+// ESC key closes modal
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closePortalOnBtn();
+});
+
+// ── Lucide Icons ──────────────────────────────────────────────
+lucide.createIcons();
+
+// ── Page Loader ───────────────────────────────────────────────
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.getElementById('page-loader').classList.add('hidden');
+    }, 700);
+});
+
+// ── Mobile Menu ───────────────────────────────────────────────
+const btn  = document.getElementById('mobile-menu-btn');
+const menu = document.getElementById('mobile-menu');
+btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+document.querySelectorAll('#mobile-menu a').forEach(l => l.addEventListener('click', () => menu.classList.add('hidden')));
+
+// ── Navbar Scroll Effect ──────────────────────────────────────
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 10) { nav.classList.add('shadow-md'); nav.classList.remove('shadow-sm'); }
+    else                     { nav.classList.add('shadow-sm'); nav.classList.remove('shadow-md'); }
+    document.getElementById('scrollTopBtn').classList.toggle('show', window.scrollY > 400);
+});
+
+// ── SCROLL REVEAL ─────────────────────────────────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── TYPEWRITER EFFECT ─────────────────────────────────────────
+const phrases = [
+    'comprehensive schooling from Class 1 to 12',
+    'expert coaching for NEET & JEE',
+    'mission admission preparation',
+    'arts, recitation & co-curriculars',
+];
+let pi = 0, ci = 0, deleting = false;
+const twEl = document.getElementById('typewriterEl');
+function typeLoop() {
+    const phrase = phrases[pi];
+    if (!deleting) {
+        twEl.textContent = phrase.substring(0, ci + 1);
+        ci++;
+        if (ci === phrase.length) { deleting = true; setTimeout(typeLoop, 2000); return; }
+        setTimeout(typeLoop, 55);
+    } else {
+        twEl.textContent = phrase.substring(0, ci - 1);
+        ci--;
+        if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(typeLoop, 400); return; }
+        setTimeout(typeLoop, 28);
+    }
+}
+setTimeout(typeLoop, 1000);
+
+// ── COUNTER ANIMATION ─────────────────────────────────────────
+function animateCounter(el) {
+    const target = +el.dataset.target;
+    const dur    = 1800;
+    const step   = 16;
+    const inc    = target / (dur / step);
+    let current  = 0;
+    const timer  = setInterval(() => {
+        current += inc;
+        if (current >= target) { el.textContent = target; clearInterval(timer); return; }
+        el.textContent = Math.floor(current);
+    }, step);
+}
+const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.stat-number').forEach(animateCounter);
+            counterObs.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.4 });
+document.querySelectorAll('.stat-card').forEach(c => counterObs.observe(c));
+
+// ── RIPPLE EFFECT ─────────────────────────────────────────────
+document.querySelectorAll('.btn-ripple').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left, y = e.clientY - rect.top;
+        const ripple = document.createElement('span');
+        ripple.classList.add('ripple-effect');
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.cssText = `width:${size}px;height:${size}px;left:${x-size/2}px;top:${y-size/2}px`;
+        this.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 700);
+    });
+});
+
+// ── FORM: Character Counter ───────────────────────────────────
+const msgInput = document.getElementById('message');
+const charDisp = document.getElementById('charCount');
+if (msgInput) {
+    msgInput.addEventListener('input', function() {
+        const c = this.value.length;
+        charDisp.textContent = `${c} character${c!==1?'s':''}`;
+    });
+}
+
+// ── FORM: Email Validation ────────────────────────────────────
+const emailInput = document.getElementById('email');
+const emailIcon  = document.getElementById('emailIcon');
+if (emailInput) {
+    emailInput.addEventListener('input', function() {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!this.value)          emailIcon.className = 'fas fa-envelope text-gray-400 transition-colors duration-200';
+        else if (re.test(this.value)) emailIcon.className = 'fas fa-check-circle text-green-500 transition-colors duration-200';
+        else                      emailIcon.className = 'fas fa-exclamation-circle text-red-400 transition-colors duration-200';
+    });
+}
+
+// ── FORM: WhatsApp Submission ─────────────────────────────────
+function sendToWhatsApp(event) {
+    event.preventDefault();
+    const sb = document.getElementById('submitBtn'), bi = document.getElementById('btnIcon'), bt = document.getElementById('btnText');
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const userMsg = document.getElementById('message').value;
+    sb.disabled = true; sb.classList.add('opacity-90','cursor-not-allowed');
+    bi.className = 'fas fa-circle-notch fa-spin mr-2 text-xl'; bt.textContent = 'Connecting...';
+    setTimeout(() => {
+        const phone = "919378029299";
+        const base  = "Hello, I'm interested in learning more about Chetana Shiksha Niketan. Could you please provide some more details about your courses or admission process?";
+        let msg = `*New Admission Inquiry*\n\n*Name:* ${name}\n*Email:* ${email}\n\n*Message:*\n${base}`;
+        if (userMsg.trim()) msg += `\n\n*Customer's Note:*\n${userMsg}`;
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+        sb.disabled = false; sb.classList.remove('opacity-90','cursor-not-allowed');
+        bi.className = 'fab fa-whatsapp mr-2 text-xl group-hover:scale-110 transition-transform duration-200';
+        bt.textContent = 'Send a Message';
+    }, 800);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  STUDENT PORTAL LOGIC
+// ══════════════════════════════════════════════════════════════
+
+// ── PORTAL TAB SWITCH ─────────────────────────────────────────
+function switchPortalTab(tab) {
+    ['routine','fees','search'].forEach(t => {
+        document.getElementById(`panel-${t}`).classList.remove('active');
+        document.getElementById(`tab-${t}`).classList.remove('active');
+    });
+    document.getElementById(`panel-${tab}`).classList.add('active');
+    document.getElementById(`tab-${tab}`).classList.add('active');
+}
+
+// ── TIMETABLE DATA ────────────────────────────────────────────
+const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat'];
+const subjectColors = {
+    'Bengali':'#dbeafe','English':'#fce7f3','Mathematics':'#d1fae5','Science':'#fef3c7',
+    'Social':'#ede9fe','Computer':'#ffedd5','Hindi':'#e0f2fe','Drawing':'#ecfccb',
+    'GK':'#fef9c3','Break':'#fef3c7','Lunch':'#d1fae5','Physics':'#e0f2fe',
+    'Chemistry':'#fce7f3','Biology':'#d1fae5','Math':'#d1fae5',
+};
+const PERIODS = ['P1\n9:00','P2\n9:45','P3\n10:30','Break','P4\n11:15','P5\n12:00','Lunch','P6\n1:00','P7\n1:45'];
+
+const routineData = {
+    '1':  [['Bengali','English','Math','Break','Drawing','GK','Lunch','Bengali','English'],
+           ['English','Math','Bengali','Break','GK','Drawing','Lunch','Math','Bengali'],
+           ['Math','Bengali','English','Break','Drawing','GK','Lunch','English','Math'],
+           ['Bengali','English','Math','Break','GK','Drawing','Lunch','Bengali','English'],
+           ['English','Math','Bengali','Break','Drawing','GK','Lunch','Math','Bengali'],
+           ['Math','Bengali','English','Break','GK','Drawing','Lunch','English','Math']],
+    '5':  [['Bengali','English','Math','Break','Science','Social','Lunch','Hindi','GK'],
+           ['English','Math','Science','Break','Bengali','Social','Lunch','GK','Drawing'],
+           ['Math','Science','English','Break','Social','Bengali','Lunch','Hindi','GK'],
+           ['Science','Bengali','Math','Break','English','GK','Lunch','Social','Drawing'],
+           ['Social','English','Science','Break','Math','Bengali','Lunch','GK','Hindi'],
+           ['GK','Math','Bengali','Break','Drawing','English','Lunch','Science','Social']],
+    '10': [['Bengali','English','Math','Break','Physics','Chemistry','Lunch','Biology','Computer'],
+           ['English','Physics','Math','Break','Bengali','Chemistry','Lunch','Biology','GK'],
+           ['Math','Bengali','Physics','Break','Chemistry','English','Lunch','Computer','Biology'],
+           ['Physics','English','Chemistry','Break','Math','Bengali','Lunch','GK','Biology'],
+           ['Chemistry','Math','Biology','Break','Physics','English','Lunch','Bengali','Computer'],
+           ['Biology','Bengali','Math','Break','GK','Physics','Lunch','English','Chemistry']],
+};
+// Fill missing classes with a generic schedule
+for (let i=1;i<=12;i++) {
+    const k=String(i);
+    if (!routineData[k]) {
+        const subj = i<=5
+            ? ['Bengali','English','Math','Break','Science','Social','Lunch','Hindi','GK']
+            : i<=8
+            ? ['Bengali','English','Math','Break','Science','Social','Lunch','Computer','GK']
+            : ['Physics','English','Math','Break','Chemistry','Bengali','Lunch','Biology','Computer'];
+        routineData[k] = DAYS.map(() => [...subj]);
+    }
+}
+
+function renderRoutine() {
+    const cls = document.getElementById('classSelect').value;
+    const ph  = document.getElementById('routine-placeholder');
+    const out = document.getElementById('routine-output');
+    const grid = document.getElementById('timetable-grid');
+    if (!cls) { ph.classList.remove('hidden'); out.classList.add('hidden'); return; }
+    ph.classList.add('hidden'); out.classList.remove('hidden');
+    const data = routineData[cls];
+    let html = `<div class="tt-header">Period</div>`;
+    DAYS.forEach(d => { html += `<div class="tt-header">${d}</div>`; });
+    PERIODS.forEach((p, pi) => {
+        const label = p.split('\n');
+        html += `<div class="tt-period">${label[0]}<br><span style="font-size:0.6rem;opacity:0.8;">${label[1]||''}</span></div>`;
+        DAYS.forEach((d, di) => {
+            const sub = data[di][pi];
+            const isBreak = sub==='Break', isLunch = sub==='Lunch';
+            const cls2 = isBreak?'tt-cell break':isLunch?'tt-cell lunch':'tt-cell';
+            const bg = subjectColors[sub]||'#f8faff';
+            html += `<div class="${cls2}" style="${!isBreak&&!isLunch?`background:${bg};`:''}">${sub}</div>`;
+        });
+    });
+    grid.innerHTML = html;
+}
+
+// ── FEES DATA ─────────────────────────────────────────────────
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const feesData = {
+    '101': { name:'Rahul Mondal',    cls:'Class 5',  amount:600,  payments:{Jan:'paid',Feb:'paid',Mar:'paid',Apr:'paid',May:'due',Jun:'due',Jul:'due',Aug:'due',Sep:'due',Oct:'due',Nov:'due',Dec:'due'} },
+    '102': { name:'Priya Das',       cls:'Class 7',  amount:700,  payments:{Jan:'paid',Feb:'paid',Mar:'paid',Apr:'partial',May:'due',Jun:'due',Jul:'due',Aug:'due',Sep:'due',Oct:'due',Nov:'due',Dec:'due'} },
+    '103': { name:'Sumon Sheikh',    cls:'Class 9',  amount:900,  payments:{Jan:'paid',Feb:'paid',Mar:'due',Apr:'due',May:'due',Jun:'due',Jul:'due',Aug:'due',Sep:'due',Oct:'due',Nov:'due',Dec:'due'} },
+    '104': { name:'Ananya Roy',      cls:'Class 3',  amount:500,  payments:{Jan:'paid',Feb:'paid',Mar:'paid',Apr:'paid',May:'paid',Jun:'due',Jul:'due',Aug:'due',Sep:'due',Oct:'due',Nov:'due',Dec:'due'} },
+    '105': { name:'Imran Hossain',   cls:'Class 11', amount:1200, payments:{Jan:'paid',Feb:'paid',Mar:'paid',Apr:'paid',May:'paid',Jun:'paid',Jul:'due',Aug:'due',Sep:'due',Oct:'due',Nov:'due',Dec:'due'} },
+};
+
+function searchFees() {
+    const roll = document.getElementById('feesRollInput').value.trim();
+    const ph   = document.getElementById('fees-placeholder');
+    const res  = document.getElementById('fees-result');
+    if (!roll) return;
+    const s = feesData[roll];
+    if (!s) {
+        ph.classList.add('hidden'); res.classList.remove('hidden');
+        res.innerHTML = `<div class="text-center py-12"><div class="text-red-400 text-5xl mb-4">😕</div><p class="font-display font-bold text-gray-700 text-lg">Student not found</p><p class="text-gray-400 text-sm mt-1">Try roll numbers: 101, 102, 103, 104, or 105</p></div>`;
+        return;
+    }
+    const paid   = MONTHS.filter(m=>s.payments[m]==='paid').length;
+    const partial= MONTHS.filter(m=>s.payments[m]==='partial').length;
+    const due    = MONTHS.filter(m=>s.payments[m]==='due').length;
+    ph.classList.add('hidden'); res.classList.remove('hidden');
+    res.innerHTML = `
+        <div class="student-card-anim bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-2xl p-5 mb-5 flex items-center gap-4">
+            <div class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center text-2xl font-display font-black">${s.name[0]}</div>
+            <div>
+                <p class="font-display font-black text-lg">${s.name}</p>
+                <p class="text-blue-200 text-sm">${s.cls} &nbsp;•&nbsp; Roll No: ${roll}</p>
+                <p class="text-blue-200 text-sm">Monthly Fees: ₹${s.amount}</p>
+            </div>
+            <div class="ml-auto text-right hidden sm:block">
+                <p class="text-xs text-blue-300 font-semibold">Paid</p>
+                <p class="font-display font-black text-xl text-green-300">${paid}/12</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 mb-4">
+            ${MONTHS.map(m => {
+                const st = s.payments[m];
+                const bg = st==='paid'?'bg-green-100 text-green-800 border-green-200':st==='partial'?'bg-yellow-100 text-yellow-800 border-yellow-200':'bg-red-50 text-red-700 border-red-200';
+                const ic = st==='paid'?'✅':st==='partial'?'⚠️':'❌';
+                return `<div class="rounded-xl border-2 p-2.5 text-center ${bg}">
+                    <p class="font-display font-bold text-xs">${m}</p>
+                    <p class="text-base mt-0.5">${ic}</p>
+                    <p class="text-xs font-semibold mt-0.5 capitalize">${st}</p>
+                </div>`;
+            }).join('')}
+        </div>
+        <div class="flex flex-wrap gap-3 text-sm">
+            <span class="flex items-center gap-1.5 bg-green-100 text-green-800 px-3 py-1.5 rounded-full font-semibold">✅ Paid: ${paid} months</span>
+            ${partial?`<span class="flex items-center gap-1.5 bg-yellow-100 text-yellow-800 px-3 py-1.5 rounded-full font-semibold">⚠️ Partial: ${partial} month</span>`:''}
+            <span class="flex items-center gap-1.5 bg-red-100 text-red-800 px-3 py-1.5 rounded-full font-semibold">❌ Due: ${due} months</span>
+            <span class="flex items-center gap-1.5 bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full font-semibold">💰 Outstanding: ₹${(due + partial*0.5) * s.amount}</span>
+        </div>
+    `;
+}
+
+// ── STUDENT SEARCH DATA ───────────────────────────────────────
+const studentDB = [
+    { roll:'101', name:'Rahul Mondal',    cls:'Class 5',  dob:'12 Mar 2015', guardian:'Subir Mondal',  phone:'98xxxxxxxx', blood:'B+', address:'Jibanti, Kandi' },
+    { roll:'102', name:'Priya Das',       cls:'Class 7',  dob:'5 Jul 2013',  guardian:'Animesh Das',   phone:'97xxxxxxxx', blood:'O+', address:'Jibanti, Kandi' },
+    { roll:'103', name:'Sumon Sheikh',    cls:'Class 9',  dob:'22 Jan 2011', guardian:'Karim Sheikh',  phone:'96xxxxxxxx', blood:'A+', address:'Kandi, Murshidabad' },
+    { roll:'104', name:'Ananya Roy',      cls:'Class 3',  dob:'8 Sep 2017',  guardian:'Tapas Roy',     phone:'95xxxxxxxx', blood:'AB+',address:'Jibanti, Kandi' },
+    { roll:'105', name:'Imran Hossain',   cls:'Class 11', dob:'1 Apr 2009',  guardian:'Jakir Hossain', phone:'94xxxxxxxx', blood:'B-', address:'Baharampur Road' },
+    { roll:'106', name:'Sneha Biswas',    cls:'Class 6',  dob:'14 Dec 2014', guardian:'Dipak Biswas',  phone:'93xxxxxxxx', blood:'O-', address:'Jibanti, Kandi' },
+    { roll:'107', name:'Akash Ghosh',     cls:'Class 8',  dob:'30 Jun 2012', guardian:'Ratan Ghosh',   phone:'92xxxxxxxx', blood:'A-', address:'Kandi, Murshidabad' },
+    { roll:'108', name:'Fatema Khatun',   cls:'Class 10', dob:'18 Feb 2010', guardian:'Mojibur Khatun',phone:'91xxxxxxxx', blood:'B+', address:'Jibanti, Kandi' },
+];
+
+function liveStudentSearch(q) {
+    const ph  = document.getElementById('search-placeholder');
+    const res = document.getElementById('search-results');
+    if (!q.trim()) { ph.classList.remove('hidden'); res.classList.add('hidden'); return; }
+    const matches = studentDB.filter(s =>
+        s.name.toLowerCase().includes(q.toLowerCase()) ||
+        s.roll.includes(q) ||
+        s.cls.toLowerCase().includes(q.toLowerCase())
+    );
+    ph.classList.add('hidden'); res.classList.remove('hidden');
+    if (!matches.length) {
+        res.innerHTML = `<div class="text-center py-10"><p class="text-gray-400 font-display font-semibold text-lg">No students found for "${q}"</p><p class="text-gray-400 text-sm mt-1">Try: Rahul, Priya, Sumon, Ananya, Imran…</p></div>`;
+        return;
+    }
+    res.innerHTML = matches.map(s => `
+        <div class="student-card-anim bg-white border-2 border-blue-100 hover:border-blue-300 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center gap-4 transition-all hover:shadow-lg">
+            <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center text-white text-2xl font-display font-black flex-shrink-0">
+                ${s.name[0]}
+            </div>
+            <div class="flex-1">
+                <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h4 class="font-display font-bold text-gray-900 text-lg">${s.name}</h4>
+                    <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2.5 py-0.5 rounded-full">${s.cls}</span>
+                    <span class="bg-red-100 text-red-700 text-xs font-bold px-2.5 py-0.5 rounded-full">🩸 ${s.blood}</span>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-1 text-sm text-gray-600">
+                    <span><span class="font-semibold text-gray-700">Roll:</span> ${s.roll}</span>
+                    <span><span class="font-semibold text-gray-700">DOB:</span> ${s.dob}</span>
+                    <span><span class="font-semibold text-gray-700">Guardian:</span> ${s.guardian}</span>
+                    <span><span class="font-semibold text-gray-700">Address:</span> ${s.address}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+</script>
+</body>
+</html>
